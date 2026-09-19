@@ -1,0 +1,167 @@
+# Instinct - Watchlist Configuration
+# Tickers, firms, and deals to track with priority
+
+tickers:
+  # TMT
+  - symbol: AAPL
+    sector: TMT
+    priority: high
+  - symbol: MSFT
+    sector: TMT
+    priority: high
+  - symbol: GOOGL
+    sector: TMT
+    priority: high
+  - symbol: META
+    sector: TMT
+    priority: high
+  - symbol: AMZN
+    sector: TMT
+    priority: high
+  - symbol: NVDA
+    sector: TMT
+    priority: high
+  - symbol: CRM
+    sector: TMT
+    priority: medium
+  - symbol: ADBE
+    sector: TMT
+    priority: medium
+  - symbol: ORCL
+    sector: TMT
+    priority: medium
+  - symbol: DDOG
+    sector: TMT
+    priority: medium
+  - symbol: NOW
+    sector: TMT
+    priority: medium
+  - symbol: SNOW
+    sector: TMT
+    priority: medium
+  - symbol: T
+    sector: TMT
+    priority: medium
+  - symbol: VZ
+    sector: TMT
+    priority: medium
+  - symbol: CMCSA
+    sector: TMT
+    priority: medium
+  - symbol: DIS
+    sector: TMT
+    priority: medium
+  - symbol: NFLX
+    sector: TMT
+    priority: medium
+
+  # FIG
+  - symbol: GS
+    sector: FIG
+    priority: high
+  - symbol: MS
+    sector: FIG
+    priority: high
+  - symbol: JPM
+    sector: FIG
+    priority: high
+  - symbol: BAC
+    sector: FIG
+    priority: medium
+  - symbol: C
+    sector: FIG
+    priority: medium
+  - symbol: WFC
+    sector: FIG
+    priority: medium
+  - symbol: BX
+    sector: FIG
+    priority: high
+  - symbol: KKR
+    sector: FIG
+    priority: high
+  - symbol: APO
+    sector: FIG
+    priority: high
+  - symbol: ARES
+    sector: FIG
+    priority: high
+  - symbol: OWL
+    sector: FIG
+    priority: medium
+  - symbol: TPG
+    sector: FIG
+    priority: medium
+
+  # Indices & Macro (for reference, fetched separately)
+  - symbol: SPY
+    sector: Index
+    priority: high
+  - symbol: QQQ
+    sector: Index
+    priority: high
+
+firms:
+  # Bulge bracket / elite boutique
+  - name: Goldman Sachs
+    type: bank
+  - name: Morgan Stanley
+    type: bank
+  - name: JPMorgan
+    type: bank
+  - name: Evercore
+    type: boutique
+  - name: Centerview Partners
+    type: boutique
+  - name: PJT Partners
+    type: boutique
+  - name: Lazard
+    type: boutique
+  - name: Moelis
+    type: boutique
+  - name: Qatalyst Partners
+    type: boutique
+
+  # PE / PC sponsors
+  - name: Blackstone
+    type: sponsor
+  - name: KKR
+    type: sponsor
+  - name: Apollo
+    type: sponsor
+  - name: Ares Management
+    type: sponsor
+  - name: Carlyle
+    type: sponsor
+  - name: TPG
+    type: sponsor
+  - name: Thoma Bravo
+    type: sponsor
+  - name: Vista Equity Partners
+    type: sponsor
+  - name: Silver Lake
+    type: sponsor
+  - name: Hellman & Friedman
+    type: sponsor
+  - name: Warburg Pincus
+    type: sponsor
+  - name: Bain Capital
+    type: sponsor
+  - name: Advent International
+    type: sponsor
+  - name: Blue Owl Capital
+    type: sponsor
+  - name: HPS Investment Partners
+    type: sponsor
+  - name: Owl Rock
+    type: sponsor
+  - name: Golub Capital
+    type: sponsor
+
+active_deals: []
+# Example:
+# - target: "Company Name"
+#   acquirer: "Buyer Name"
+#   announced: "2026-09-01"
+#   status: "announced"
+#   sector: "TMT"

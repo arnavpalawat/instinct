@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instinct | {{ date_formatted }} | Data-Only Briefing</title>
+<style>
+:root {
+  --bg:          #ffffff;
+  --bg-surface:  #f6f7f9;
+  --bg-card:     #ffffff;
+  --border:      #d8dbe0;
+  --border-light:#e9ebef;
+  --text:        #1a1d23;
+  --text-2:      #4a4f5c;
+  --text-3:      #7a7f8c;
+  --accent:      #2563eb;
+  --accent-hover:#1d4ed8;
+  --accent-bg:   #eff4ff;
+  --green:       #16a34a;
+  --red:         #dc2626;
+  --orange:      #ea580c;
+  --card-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --radius:      6px;
+  --radius-lg:   10px;
+  --font:        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:   "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #0f1117;
+    --bg-surface:  #181a22;
+    --bg-card:     #1e2029;
+    --border:      #2e3140;
+    --border-light:#252731;
+    --text:        #e8eaed;
+    --text-2:      #a1a6b4;
+    --text-3:      #6b7085;
+    --accent:      #5b8def;
+    --accent-hover:#7aa5ff;
+    --accent-bg:   #1a2744;
+    --green:       #4ade80;
+    --red:         #f87171;
+    --orange:      #fb923c;
+    --card-shadow: 0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0 20px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.header-sep { color: var(--text-3); font-weight: 300; }
+
+.header-type {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.fallback-banner {
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .fallback-banner {
+    background: #332b00;
+    border-color: #5c4d00;
+    color: #fde68a;
+  }
+}
+
+.fallback-banner strong { display: block; margin-bottom: 4px; }
+
+.section {
+  padding: 24px 0 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+
+/* Data table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+.data-table th, .data-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.data-table th {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  background: var(--bg-surface);
+}
+
+.data-table td { color: var(--text-2); font-family: var(--font-mono); }
+
+.chg-up { color: var(--green); }
+.chg-down { color: var(--red); }
+.chg-flat { color: var(--text-3); }
+
+.deal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin: 10px 0;
+}
+
+.deal-card h3 { margin: 0 0 8px; font-size: 15px; color: var(--text); }
+.deal-card .detail { font-size: 13px; color: var(--text-2); margin: 3px 0; }
+.deal-card .detail strong { color: var(--text-3); font-size: 11px; text-transform: uppercase; }
+
+.story-list { padding-left: 18px; margin: 0; }
+.story-list li { margin-bottom: 6px; font-size: 13px; color: var(--text-2); }
+.story-list a { word-break: break-all; }
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 40px;
+  margin-top: 8px;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.footer-nav a { font-size: 13px; font-weight: 600; }
+.footer-nav .disabled { color: var(--text-3); pointer-events: none; }
+
+.footer-meta {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <div class="header-brand">
+      <span class="header-logo">Instinct</span>
+      <span class="header-sep">/</span>
+      <span class="header-type">Data Briefing</span>
+    </div>
+    <div class="header-meta">
+      <span>{{ date_formatted }}</span>
+    </div>
+  </header>
+
+  <div class="fallback-banner">
+    <strong>Auto-generated from data only &mdash; no AI analysis today.</strong>
+    The LLM pipeline was unavailable. Below is the raw data collected for this briefing, formatted for review.
+  </div>
+
+  <!-- Market Data -->
+  {% if market %}
+  <div class="section">
+    <h2 class="section-title">Market Snapshot</h2>
+
+    {% if market.get("indices") %}
+    <table class="data-table">
+      <thead>
+        <tr><th>Index</th><th>Level</th><th>Change</th></tr>
+      </thead>
+      <tbody>
+        {% for name, val in market.indices.items() %}
+          {% if val is not none %}
+          <tr>
+            <td>{{ name }}</td>
+            <td>{{ "{:,.2f}".format(val) }}</td>
+            <td>
+              {% if market.get("index_changes") and market.index_changes.get(name) is not none %}
+                {% set chg = market.index_changes[name] %}
+                <span class="{{ 'chg-up' if chg > 0 else ('chg-down' if chg < 0 else 'chg-flat') }}">
+                  {{ "{:+.2f}".format(chg) }}%
+                </span>
+              {% else %}&mdash;{% endif %}
+            </td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    {% if market.get("yields") %}
+    <table class="data-table">
+      <thead>
+        <tr><th>Yield</th><th>Rate</th><th>Change (bps)</th></tr>
+      </thead>
+      <tbody>
+        {% for name, val in market.yields.items() %}
+          {% if val is not none %}
+          <tr>
+            <td>{{ name }}</td>
+            <td>{{ "{:.3f}".format(val) }}%</td>
+            <td>
+              {% if market.get("yield_changes_bps") and market.yield_changes_bps.get(name) is not none %}
+                {% set chg = market.yield_changes_bps[name] %}
+                <span class="{{ 'chg-up' if chg > 0 else ('chg-down' if chg < 0 else 'chg-flat') }}">
+                  {{ "{:+.1f}".format(chg) }}
+                </span>
+              {% else %}&mdash;{% endif %}
+            </td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    {% if market.get("commodities") or market.get("fx") %}
+    <table class="data-table">
+      <thead>
+        <tr><th>Asset</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        {% if market.get("commodities") %}
+          {% for name, val in market.commodities.items() %}
+            {% if val is not none %}
+            <tr><td>{{ name }}</td><td>${{ "{:,.2f}".format(val) }}</td></tr>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if market.get("fx") %}
+          {% for name, val in market.fx.items() %}
+            {% if val is not none %}
+            <tr><td>{{ name }}</td><td>{{ "{:.4f}".format(val) if val < 10 else "{:.2f}".format(val) }}</td></tr>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if market.get("vix") is not none %}
+        <tr><td>VIX</td><td>{{ "{:.1f}".format(market.vix) }}</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- Deals -->
+  {% if deals %}
+  <div class="section">
+    <h2 class="section-title">Deals Collected</h2>
+    {% for deal in deals %}
+    <div class="deal-card">
+      <h3>
+        {% if deal.acquirer is string %}{{ deal.acquirer }}{% else %}{{ deal.get("acquirer","") }}{% endif %}
+        &rarr;
+        {% if deal.target is string %}{{ deal.target }}{% else %}{{ deal.get("target","") }}{% endif %}
+      </h3>
+      {% set dt = deal.deal_type if deal.deal_type is defined else deal.get("deal_type","") %}
+      {% if dt %}<div class="detail"><strong>Type:</strong> {{ dt }}</div>{% endif %}
+      {% set ev = deal.ev_mm if deal.ev_mm is defined else deal.get("ev_mm") %}
+      {% if ev %}<div class="detail"><strong>EV:</strong> ${{ "{:,.0f}".format(ev) }}M</div>{% endif %}
+      {% set sector = deal.sector if deal.sector is defined else deal.get("sector","") %}
+      {% if sector %}<div class="detail"><strong>Sector:</strong> {{ sector }}</div>{% endif %}
+      {% set status = deal.status if deal.status is defined else deal.get("status","") %}
+      {% if status %}<div class="detail"><strong>Status:</strong> {{ status }}</div>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Additional Stories -->
+  {% if appendix.get("additional_stories") %}
+  <div class="section">
+    <h2 class="section-title">Additional Stories</h2>
+    <ul class="story-list">
+      {% for story in appendix.additional_stories %}
+      <li>{{ story | safe }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Source Links -->
+  {% if appendix.get("source_links") %}
+  <div class="section">
+    <h2 class="section-title">Sources</h2>
+    <ul class="story-list">
+      {% for link in appendix.source_links %}
+      <li>
+        {% if link is mapping %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.title or link.url }}</a>
+        {% else %}
+          {{ link | safe }}
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <footer class="footer">
+    <div class="footer-nav">
+      {% if prev_date %}
+        <a href="../{{ prev_date }}/index.html">&larr; {{ prev_date }}</a>
+      {% else %}
+        <span class="disabled">&larr; Previous</span>
+      {% endif %}
+
+      <a href="{{ base_url }}/index.html">Archive</a>
+
+      {% if next_date %}
+        <a href="../{{ next_date }}/index.html">{{ next_date }} &rarr;</a>
+      {% else %}
+        <span class="disabled">Next &rarr;</span>
+      {% endif %}
+    </div>
+    <div class="footer-meta">
+      Generated {{ generated_at.strftime("%Y-%m-%d %H:%M UTC") if generated_at else "" }}
+      &middot; Data-only fallback
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

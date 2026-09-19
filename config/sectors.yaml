@@ -1,0 +1,135 @@
+# Sector keyword definitions for article classification
+
+TMT:
+  keywords:
+    - technology
+    - software
+    - SaaS
+    - cloud
+    - cybersecurity
+    - artificial intelligence
+    - AI
+    - machine learning
+    - semiconductor
+    - chip
+    - data center
+    - telecom
+    - telecommunications
+    - 5G
+    - fiber
+    - broadband
+    - media
+    - streaming
+    - entertainment
+    - gaming
+    - advertising
+    - adtech
+    - social media
+    - e-commerce
+    - fintech
+    - payments
+    - digital
+    - internet
+    - mobile
+    - enterprise software
+    - infrastructure software
+  tickers:
+    - AAPL
+    - MSFT
+    - GOOGL
+    - META
+    - AMZN
+    - NVDA
+    - CRM
+    - ADBE
+    - ORCL
+    - DDOG
+    - NOW
+    - SNOW
+    - T
+    - VZ
+    - CMCSA
+    - DIS
+    - NFLX
+
+FIG:
+  keywords:
+    - bank
+    - banking
+    - financial services
+    - insurance
+    - asset management
+    - private equity
+    - private credit
+    - direct lending
+    - leveraged finance
+    - capital markets
+    - wealth management
+    - fintech
+    - payments
+    - exchange
+    - brokerage
+    - SPAC
+    - CLO
+    - securitization
+    - mortgage
+    - credit
+    - lending
+    - fund
+    - alternative assets
+    - investment management
+  tickers:
+    - GS
+    - MS
+    - JPM
+    - BAC
+    - C
+    - WFC
+    - BX
+    - KKR
+    - APO
+    - ARES
+    - OWL
+    - TPG
+
+Healthcare:
+  keywords:
+    - healthcare
+    - pharma
+    - biotech
+    - medical device
+    - hospital
+    - health insurance
+    - drug
+    - FDA
+    - clinical trial
+    - CRO
+    - life sciences
+  tickers: []
+
+Industrials:
+  keywords:
+    - industrial
+    - manufacturing
+    - aerospace
+    - defense
+    - logistics
+    - transportation
+    - construction
+    - engineering
+    - infrastructure
+  tickers: []
+
+Energy:
+  keywords:
+    - energy
+    - oil
+    - gas
+    - renewable
+    - solar
+    - wind
+    - utility
+    - pipeline
+    - LNG
+    - refining
+  tickers: []

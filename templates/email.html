@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Instinct | {{ date_formatted }}</title>
+<!--[if mso]>
+<style type="text/css">
+  table { border-collapse: collapse; }
+  .fallback-font { font-family: Arial, sans-serif; }
+</style>
+<![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+
+<!-- Preheader text (hidden, for email preview) -->
+<div style="display:none;font-size:1px;color:#f4f5f7;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+  {{ headline or "Your daily financial briefing is ready." }}
+</div>
+
+<!-- Outer wrapper -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f4f5f7;">
+<tr>
+<td align="center" style="padding:32px 16px;">
+
+  <!-- Inner card -->
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:560px;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+
+    <!-- Header bar -->
+    <tr>
+      <td style="background-color:#1a1d23;padding:24px 32px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td>
+              <span style="font-size:20px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ffffff;">INSTINCT</span>
+            </td>
+            <td align="right">
+              <span style="font-size:12px;font-weight:500;color:#a1a6b4;text-transform:uppercase;letter-spacing:1px;">Morning Briefing</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- Date -->
+    <tr>
+      <td style="padding:24px 32px 0;">
+        <p style="margin:0;font-size:13px;color:#7a7f8c;text-transform:uppercase;letter-spacing:0.5px;">{{ date_formatted }}</p>
+      </td>
+    </tr>
+
+    <!-- Headline -->
+    <tr>
+      <td style="padding:12px 32px 0;">
+        <h1 style="margin:0;font-size:22px;font-weight:700;color:#1a1d23;line-height:1.35;">{{ headline or "Today's Briefing" }}</h1>
+      </td>
+    </tr>
+
+    <!-- Preview text -->
+    {% if preview %}
+    <tr>
+      <td style="padding:14px 32px 0;">
+        <p style="margin:0;font-size:15px;color:#4a4f5c;line-height:1.6;">{{ preview }}</p>
+      </td>
+    </tr>
+    {% endif %}
+
+    <!-- Divider -->
+    <tr>
+      <td style="padding:24px 32px 0;">
+        <div style="border-top:1px solid #e9ebef;"></div>
+      </td>
+    </tr>
+
+    <!-- CTA Button -->
+    <tr>
+      <td align="center" style="padding:28px 32px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td align="center" style="background-color:#2563eb;border-radius:6px;">
+              <a href="{{ page_url }}" target="_blank" style="display:inline-block;padding:14px 36px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:0.3px;">
+                Read Today's Briefing &rarr;
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- Secondary link -->
+    <tr>
+      <td align="center" style="padding:0 32px 28px;">
+        <p style="margin:0;font-size:13px;color:#7a7f8c;">
+          Or copy this link: <a href="{{ page_url }}" style="color:#2563eb;">{{ page_url }}</a>
+        </p>
+      </td>
+    </tr>
+
+  </table>
+  <!-- /Inner card -->
+
+  <!-- Footer -->
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:560px;">
+    <tr>
+      <td align="center" style="padding:20px 32px;">
+        <p style="margin:0;font-size:11px;color:#7a7f8c;line-height:1.5;">
+          Instinct Financial Briefing &middot; Delivered daily
+        </p>
+      </td>
+    </tr>
+  </table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>

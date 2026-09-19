@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instinct | {{ date_formatted }} | {{ headline or 'Morning Briefing' }}</title>
+<meta name="description" content="{{ headline or 'Instinct Morning Briefing' }} — {{ date_formatted }}">
+<style>
+/* ================================================================
+   INSTINCT — Morning Briefing  |  Mobile-first, dark/light
+   ================================================================ */
+
+:root {
+  /* Light mode (default) */
+  --bg:          #ffffff;
+  --bg-surface:  #f6f7f9;
+  --bg-card:     #ffffff;
+  --bg-code:     #f0f1f3;
+  --border:      #d8dbe0;
+  --border-light:#e9ebef;
+  --text:        #1a1d23;
+  --text-2:      #4a4f5c;
+  --text-3:      #7a7f8c;
+  --accent:      #2563eb;
+  --accent-hover:#1d4ed8;
+  --accent-bg:   #eff4ff;
+  --green:       #16a34a;
+  --red:         #dc2626;
+  --orange:      #ea580c;
+  --pill-bg:     #f0f1f3;
+  --pill-active: #2563eb;
+  --pill-text:   #4a4f5c;
+  --pill-active-text: #ffffff;
+  --card-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --radius:      6px;
+  --radius-lg:   10px;
+  --font:        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:   "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #0f1117;
+    --bg-surface:  #181a22;
+    --bg-card:     #1e2029;
+    --bg-code:     #252731;
+    --border:      #2e3140;
+    --border-light:#252731;
+    --text:        #e8eaed;
+    --text-2:      #a1a6b4;
+    --text-3:      #6b7085;
+    --accent:      #5b8def;
+    --accent-hover:#7aa5ff;
+    --accent-bg:   #1a2744;
+    --green:       #4ade80;
+    --red:         #f87171;
+    --orange:      #fb923c;
+    --pill-bg:     #252731;
+    --pill-active: #5b8def;
+    --pill-text:   #a1a6b4;
+    --pill-active-text: #ffffff;
+    --card-shadow: 0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+/* ---- HEADER ---- */
+
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0 20px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.header-sep {
+  color: var(--text-3);
+  font-weight: 300;
+}
+
+.header-type {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-3);
+  flex-wrap: wrap;
+}
+
+.header-meta span::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text-3);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.header-meta span:first-child::before { display: none; }
+
+.headline {
+  margin: 16px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+/* ---- NAV PILLS ---- */
+
+.nav-pills {
+  display: flex;
+  gap: 6px;
+  padding: 12px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 4px;
+}
+
+.nav-pills::-webkit-scrollbar { display: none; }
+
+.nav-pill {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all .15s;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.nav-pill:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+  text-decoration: none;
+  border-color: var(--accent);
+}
+
+.nav-pill.active {
+  background: var(--pill-active);
+  color: var(--pill-active-text);
+}
+
+/* ---- SECTIONS ---- */
+
+.section {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section:last-of-type { border-bottom: none; }
+
+.section-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.section-body {
+  color: var(--text-2);
+  line-height: 1.7;
+}
+
+.section-body p { margin: 0 0 12px; }
+.section-body p:last-child { margin-bottom: 0; }
+.section-body ul, .section-body ol { padding-left: 20px; margin: 0 0 12px; }
+.section-body li { margin-bottom: 6px; }
+.section-body strong { color: var(--text); font-weight: 600; }
+
+/* ---- DEAL CARD ---- */
+
+.deal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: var(--card-shadow);
+}
+
+.deal-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.deal-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.deal-card-type {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.deal-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.deal-metric {
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+
+.deal-metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.deal-metric-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+
+.deal-detail {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 4px 0;
+}
+
+.deal-detail-label {
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* ---- MARKET FIGURES ---- */
+
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.market-item {
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 10px;
+  text-align: center;
+}
+
+.market-item-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+}
+
+.market-item-value {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.market-item-change {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.chg-up { color: var(--green); }
+.chg-down { color: var(--red); }
+.chg-flat { color: var(--text-3); }
+
+/* ---- INTERVIEW Q&A ---- */
+
+.qa-item {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--border-light);
+}
+
+.qa-question {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.qa-question::before {
+  content: "Q";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.qa-reveal-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  margin-bottom: 8px;
+}
+
+.qa-reveal-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.qa-answer {
+  display: none;
+  padding: 12px 0 0 30px;
+  color: var(--text-2);
+  border-top: 1px solid var(--border-light);
+  margin-top: 8px;
+  padding-top: 12px;
+}
+
+.qa-answer.visible { display: block; }
+
+.qa-answer::before {
+  content: "A";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  float: left;
+  margin-left: -30px;
+  margin-top: 0;
+}
+
+/* ---- APPENDIX ---- */
+
+.appendix { padding: 24px 0; }
+
+.appendix-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+
+details.appendix-section {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+details.appendix-section summary {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  background: var(--bg-surface);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+details.appendix-section summary::-webkit-details-marker { display: none; }
+
+details.appendix-section summary::after {
+  content: "+";
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-3);
+  transition: transform .2s;
+}
+
+details.appendix-section[open] summary::after {
+  content: "\2212";
+}
+
+details.appendix-section .appendix-content {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Appendix tables */
+.appendix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+
+.appendix-table th, .appendix-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.appendix-table th {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  background: var(--bg-surface);
+}
+
+.appendix-table td { color: var(--text-2); }
+
+.appendix-list { padding-left: 18px; margin: 0; }
+.appendix-list li { margin-bottom: 6px; }
+.appendix-list a { word-break: break-all; }
+
+/* ---- FOOTER ---- */
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 40px;
+  margin-top: 8px;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.footer-nav a {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.footer-nav .disabled {
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.footer-meta {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+}
+
+.footer-meta a { color: var(--text-3); }
+.footer-meta a:hover { color: var(--accent); }
+
+/* ---- ERROR BANNER ---- */
+
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: #991b1b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-banner {
+    background: #2d1616;
+    border-color: #5c2020;
+    color: #fca5a5;
+  }
+}
+
+/* ---- UTILITIES ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.text-mono { font-family: var(--font-mono); }
+.text-muted { color: var(--text-3); }
+.text-sm { font-size: 13px; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="header-logo">Instinct</span>
+      <span class="header-sep">/</span>
+      <span class="header-type">Morning Briefing</span>
+    </div>
+    <div class="header-meta">
+      <span>{{ date_formatted }}</span>
+      {% if word_count %}<span>{{ "{:,}".format(word_count) }} words</span>{% endif %}
+    </div>
+    {% if headline %}
+    <h1 class="headline">{{ headline }}</h1>
+    {% endif %}
+  </header>
+
+  <!-- ============================================================
+       PIPELINE ERRORS
+       ============================================================ -->
+  {% if pipeline_errors %}
+  <div class="error-banner">
+    <strong>Pipeline notices:</strong>
+    <ul style="margin:4px 0 0;padding-left:18px;">
+      {% for err in pipeline_errors %}
+      <li>{{ err }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- ============================================================
+       NAV PILLS
+       ============================================================ -->
+  <nav class="nav-pills" id="nav-pills">
+    {% for key in section_order %}
+      {% if sections.get(key) %}
+    <a class="nav-pill" href="#section-{{ key }}">{{ section_labels[key] }}</a>
+      {% endif %}
+    {% endfor %}
+    <a class="nav-pill" href="#appendix">Appendix</a>
+  </nav>
+
+  <!-- ============================================================
+       SECTIONS
+       ============================================================ -->
+
+  {# --- Opening Brief --- #}
+  {% if sections.get("opening_brief") %}
+  <section class="section" id="section-opening_brief">
+    <div class="section-label">Section 1</div>
+    <h2 class="section-title">Opening Brief</h2>
+    <div class="section-body">{{ sections.opening_brief | safe }}</div>
+  </section>
+  {% endif %}
+
+  {# --- Markets & Macro --- #}
+  {% if sections.get("markets_macro") %}
+  <section class="section" id="section-markets_macro">
+    <div class="section-label">Section 2</div>
+    <h2 class="section-title">Markets &amp; Macro</h2>
+
+    {# Market snapshot grid #}
+    {% if market %}
+    <div class="market-grid">
+      {% if market.get("indices") %}
+        {% for name, val in market.indices.items() %}
+          {% if val is not none %}
+          <div class="market-item">
+            <div class="market-item-label">{{ name }}</div>
+            <div class="market-item-value">{{ "{:,.0f}".format(val) if val >= 100 else "{:,.2f}".format(val) }}</div>
+            {% if market.get("index_changes") and market.index_changes.get(name) is not none %}
+              {% set chg = market.index_changes[name] %}
+              <div class="market-item-change {{ 'chg-up' if chg > 0 else ('chg-down' if chg < 0 else 'chg-flat') }}">
+                {{ "{:+.2f}".format(chg) }}%
+              </div>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if market.get("yields") %}
+        {% for name, val in market.yields.items() %}
+          {% if val is not none %}
+          <div class="market-item">
+            <div class="market-item-label">{{ name }} Yield</div>
+            <div class="market-item-value">{{ "{:.3f}".format(val) }}%</div>
+            {% if market.get("yield_changes_bps") and market.yield_changes_bps.get(name) is not none %}
+              {% set chg = market.yield_changes_bps[name] %}
+              <div class="market-item-change {{ 'chg-up' if chg > 0 else ('chg-down' if chg < 0 else 'chg-flat') }}">
+                {{ "{:+.1f}".format(chg) }} bps
+              </div>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if market.get("vix") is not none %}
+      <div class="market-item">
+        <div class="market-item-label">VIX</div>
+        <div class="market-item-value">{{ "{:.1f}".format(market.vix) }}</div>
+      </div>
+      {% endif %}
+
+      {% if market.get("commodities") %}
+        {% for name, val in market.commodities.items() %}
+          {% if val is not none %}
+          <div class="market-item">
+            <div class="market-item-label">{{ name }}</div>
+            <div class="market-item-value">${{ "{:,.2f}".format(val) }}</div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if market.get("fx") %}
+        {% for name, val in market.fx.items() %}
+          {% if val is not none %}
+          <div class="market-item">
+            <div class="market-item-label">{{ name }}</div>
+            <div class="market-item-value">{{ "{:.4f}".format(val) if val < 10 else "{:.2f}".format(val) }}</div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="section-body">{{ sections.markets_macro | safe }}</div>
+  </section>
+  {% endif %}
+
+  {# --- Deal of the Day --- #}
+  {% if sections.get("deal_of_day") %}
+  <section class="section" id="section-deal_of_day">
+    <div class="section-label">Section 3</div>
+    <h2 class="section-title">Deal of the Day</h2>
+
+    {# Deal card for primary deal #}
+    {% if deals %}
+      {% set deal = deals[0] if deals is iterable and deals | length > 0 else none %}
+      {% if deal %}
+      <div class="deal-card">
+        <div class="deal-card-header">
+          <span class="deal-card-title">
+            {% if deal.acquirer is string %}{{ deal.acquirer }}{% else %}{{ deal.get("acquirer","") }}{% endif %}
+            &rarr;
+            {% if deal.target is string %}{{ deal.target }}{% else %}{{ deal.get("target","") }}{% endif %}
+          </span>
+          <span class="deal-card-type">
+            {% if deal.deal_type is string %}{{ deal.deal_type }}{% else %}{{ deal.get("deal_type","") }}{% endif %}
+          </span>
+        </div>
+
+        <div class="deal-metrics">
+          {% set ev = deal.ev_mm if deal.ev_mm is defined else deal.get("ev_mm") %}
+          {% if ev %}
+          <div class="deal-metric">
+            <div class="deal-metric-label">Enterprise Value</div>
+            <div class="deal-metric-value">${{ "{:,.0f}".format(ev) }}M</div>
+          </div>
+          {% endif %}
+
+          {% set evr = deal.ev_revenue if deal.ev_revenue is defined else deal.get("ev_revenue") %}
+          {% if evr %}
+          <div class="deal-metric">
+            <div class="deal-metric-label">EV / Revenue</div>
+            <div class="deal-metric-value">{{ evr }}</div>
+          </div>
+          {% endif %}
+
+          {% set eve = deal.ev_ebitda if deal.ev_ebitda is defined else deal.get("ev_ebitda") %}
+          {% if eve %}
+          <div class="deal-metric">
+            <div class="deal-metric-label">EV / EBITDA</div>
+            <div class="deal-metric-value">{{ eve }}</div>
+          </div>
+          {% endif %}
+
+          {% set prem = deal.premium_pct if deal.premium_pct is defined else deal.get("premium_pct") %}
+          {% if prem %}
+          <div class="deal-metric">
+            <div class="deal-metric-label">Premium</div>
+            <div class="deal-metric-value">{{ "{:.1f}".format(prem) }}%</div>
+          </div>
+          {% endif %}
+        </div>
+
+        {% set consideration = deal.consideration if deal.consideration is defined else deal.get("consideration","") %}
+        {% if consideration %}
+        <div class="deal-detail">
+          <span class="deal-detail-label">Consideration:</span> {{ consideration }}
+        </div>
+        {% endif %}
+
+        {% set financing = deal.financing if deal.financing is defined else deal.get("financing","") %}
+        {% if financing %}
+        <div class="deal-detail">
+          <span class="deal-detail-label">Financing:</span> {{ financing }}
+        </div>
+        {% endif %}
+
+        {% set sector = deal.sector if deal.sector is defined else deal.get("sector","") %}
+        {% if sector %}
+        <div class="deal-detail">
+          <span class="deal-detail-label">Sector:</span> {{ sector }}
+        </div>
+        {% endif %}
+
+        {% set status = deal.status if deal.status is defined else deal.get("status","") %}
+        {% if status %}
+        <div class="deal-detail">
+          <span class="deal-detail-label">Status:</span> {{ status }}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    {% endif %}
+
+    <div class="section-body">{{ sections.deal_of_day | safe }}</div>
+  </section>
+  {% endif %}
+
+  {# --- PE & PC Developments --- #}
+  {% if sections.get("pe_pc") %}
+  <section class="section" id="section-pe_pc">
+    <div class="section-label">Section 4</div>
+    <h2 class="section-title">PE &amp; PC Developments</h2>
+    <div class="section-body">{{ sections.pe_pc | safe }}</div>
+  </section>
+  {% endif %}
+
+  {# --- Company / Sector Insight --- #}
+  {% if sections.get("company_insight") %}
+  <section class="section" id="section-company_insight">
+    <div class="section-label">Section 5</div>
+    <h2 class="section-title">Company / Sector Insight</h2>
+    <div class="section-body">{{ sections.company_insight | safe }}</div>
+  </section>
+  {% endif %}
+
+  {# --- Interview Practice --- #}
+  {% if sections.get("interview_practice") %}
+  <section class="section" id="section-interview_practice">
+    <div class="section-label">Section 6</div>
+    <h2 class="section-title">Interview Practice</h2>
+    <div class="section-body" id="interview-section">{{ sections.interview_practice | safe }}</div>
+  </section>
+  {% endif %}
+
+  {# --- What to Watch --- #}
+  {% if sections.get("what_to_watch") %}
+  <section class="section" id="section-what_to_watch">
+    <div class="section-label">Section 7</div>
+    <h2 class="section-title">What to Watch</h2>
+    <div class="section-body">{{ sections.what_to_watch | safe }}</div>
+  </section>
+  {% endif %}
+
+  <!-- ============================================================
+       APPENDIX
+       ============================================================ -->
+  <div class="appendix" id="appendix">
+    <div class="appendix-title">Appendix</div>
+
+    {# Full Market Table #}
+    {% if appendix.get("full_market_table") %}
+    <details class="appendix-section">
+      <summary>Full Market Table</summary>
+      <div class="appendix-content">{{ appendix.full_market_table | safe }}</div>
+    </details>
+    {% endif %}
+
+    {# Additional Stories #}
+    {% if appendix.get("additional_stories") %}
+    <details class="appendix-section">
+      <summary>Additional Stories ({{ appendix.additional_stories | length }})</summary>
+      <div class="appendix-content">
+        <ul class="appendix-list">
+          {% for story in appendix.additional_stories %}
+          <li>{{ story | safe }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </details>
+    {% endif %}
+
+    {# Source Links #}
+    {% if appendix.get("source_links") %}
+    <details class="appendix-section">
+      <summary>Sources ({{ appendix.source_links | length }})</summary>
+      <div class="appendix-content">
+        <ul class="appendix-list">
+          {% for link in appendix.source_links %}
+          <li>
+            {% if link is mapping %}
+              <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.title or link.url }}</a>
+            {% else %}
+              {{ link | safe }}
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </details>
+    {% endif %}
+
+    {# Glossary #}
+    {% if appendix.get("glossary_term") and appendix.glossary_term.get("term") %}
+    <details class="appendix-section">
+      <summary>Glossary: {{ appendix.glossary_term.term }}</summary>
+      <div class="appendix-content">
+        <strong>{{ appendix.glossary_term.term }}</strong> &mdash; {{ appendix.glossary_term.definition }}
+      </div>
+    </details>
+    {% endif %}
+
+    {# Retrieval Questions #}
+    {% if appendix.get("retrieval_questions") %}
+    <details class="appendix-section">
+      <summary>Retrieval Questions ({{ appendix.retrieval_questions | length }})</summary>
+      <div class="appendix-content">
+        <ol class="appendix-list">
+          {% for q in appendix.retrieval_questions %}
+          <li>{{ q }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    </details>
+    {% endif %}
+  </div>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="footer-nav">
+      {% if prev_date %}
+        <a href="../{{ prev_date }}/index.html">&larr; {{ prev_date }}</a>
+      {% else %}
+        <span class="disabled">&larr; Previous</span>
+      {% endif %}
+
+      <a href="{{ base_url }}/index.html">Archive</a>
+
+      {% if next_date %}
+        <a href="../{{ next_date }}/index.html">{{ next_date }} &rarr;</a>
+      {% else %}
+        <span class="disabled">Next &rarr;</span>
+      {% endif %}
+    </div>
+    <div class="footer-meta">
+      Generated {{ generated_at.strftime("%Y-%m-%d %H:%M UTC") if generated_at else "" }}
+      &middot;
+      <a href="{{ base_url }}/index.html">Instinct Archive</a>
+    </div>
+  </footer>
+
+</div><!-- /.container -->
+
+<!-- ================================================================
+     INLINE JAVASCRIPT
+     ================================================================ -->
+<script>
+(function() {
+  "use strict";
+
+  /* --- Smooth scroll for nav pills --- */
+  var pills = document.querySelectorAll(".nav-pill");
+  pills.forEach(function(pill) {
+    pill.addEventListener("click", function(e) {
+      var href = this.getAttribute("href");
+      if (href && href.charAt(0) === "#") {
+        e.preventDefault();
+        var target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          /* Update active state */
+          pills.forEach(function(p) { p.classList.remove("active"); });
+          this.classList.add("active");
+        }
+      }
+    });
+  });
+
+  /* --- Active pill on scroll --- */
+  var sections = document.querySelectorAll(".section, .appendix");
+  function updateActivePill() {
+    var scrollPos = window.scrollY + 120;
+    sections.forEach(function(sec) {
+      var id = sec.getAttribute("id");
+      if (!id) return;
+      var pill = document.querySelector('.nav-pill[href="#' + id + '"]');
+      if (!pill) return;
+      if (sec.offsetTop <= scrollPos && sec.offsetTop + sec.offsetHeight > scrollPos) {
+        pills.forEach(function(p) { p.classList.remove("active"); });
+        pill.classList.add("active");
+      }
+    });
+  }
+  var scrollTimer;
+  window.addEventListener("scroll", function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(updateActivePill, 50);
+  });
+
+  /* --- Interview Q&A reveal --- */
+  document.querySelectorAll(".qa-reveal-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var answer = this.nextElementSibling;
+      if (answer && answer.classList.contains("qa-answer")) {
+        answer.classList.toggle("visible");
+        this.textContent = answer.classList.contains("visible") ? "Hide Answer" : "Reveal Answer";
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

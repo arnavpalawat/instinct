@@ -1,0 +1,19 @@
+# Data collection
+yfinance>=0.2.31
+finnhub-python>=2.4.19
+fredapi>=0.5.1
+feedparser>=6.0.10
+requests>=2.31.0
+
+# Processing
+scikit-learn>=1.3.0
+
+# Generation
+groq>=0.4.0
+jinja2>=3.1.2
+
+# Config
+pyyaml>=6.0.1
+
+# Utilities
+python-dateutil>=2.8.2

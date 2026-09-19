@@ -1,0 +1,37 @@
+# Data (ephemeral during CI)
+data/
+*.mp3
+*.wav
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+*.key
+service-account*.json
+credentials*.json
+.github/workflows/daily_briefing.yml
+
+# Generated docs (on gh-pages branch only)
+# docs/ is tracked on gh-pages but not main

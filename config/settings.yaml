@@ -1,0 +1,36 @@
+# Instinct - Daily Financial Briefing Configuration
+user:
+  email: ""  # Set via RECIPIENT_EMAIL env var or here
+  timezone: "America/Chicago"
+  name: "Arnav"
+
+briefing:
+  target_words: 2800
+  quiet_day_words: 1800
+  weekend_words: 800
+  speaking_rate_wpm: 155
+  info_cutoff_minutes_before: 0  # How many min before gen to cut off data
+
+sectors:
+  primary:
+    - TMT
+    - FIG
+  general: true
+
+llm:
+  provider: "groq"
+  model: "llama-3.3-70b-versatile"
+  temperature: 0.3
+  max_tokens_per_section: 1500
+  max_retries: 3
+
+email:
+  enabled: false
+
+publishing:
+  base_url: ""  # Set to your GitHub Pages URL, e.g., https://username.github.io/instinct
+  briefings_dir: "docs/briefings"
+  assets_dir: "docs/assets"
+
+schedule:
+  cron: "0 13 * * *"  # 8 AM CDT = 13:00 UTC
