@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-19",
+  "generated_at": "2026-09-19T22:49:42.122842",
+  "info_cutoff": "2026-09-19T22:49:42.122861",
+  "is_weekend": true,
+  "sections": {
+    "opening_brief": "Weekend Market Recap\n\nSP500: 7,650.50 (+0.17%)\nNASDAQ: 26,522.54 (+0.39%)\nDJIA: 51,682.64 (-0.18%)\nRussell2000: 2,860.40 (-0.50%)\n\nThis week's top stories:\n  - : Q/C TECHNOLOGIES, INC.  (QCLS)  (CIK 0001321834) (sec_edgar)\n  - : Burke & Herbert Financial Services Corp.  (BHRB)  (CIK 0001964333) (sec_edgar)\n  - : First Carolina Financial Services, Inc.  (FCBM)  (CIK 0001531193) (sec_edgar)\n  - : 5C Lending Partners Corp.  (CIK 0001998387) (sec_edgar)\n  - : ExchangeRight Income Fund  (CIK 0001771514) (sec_edgar)",
+    "markets_macro": "",
+    "deal_of_day": "",
+    "pe_pc": "",
+    "company_insight": "",
+    "interview_practice": "",
+    "what_to_watch": ""
+  },
+  "appendix": {
+    "full_market_table": "",
+    "additional_stories": [],
+    "source_links": [],
+    "glossary_term": {
+      "term": "",
+      "definition": ""
+    },
+    "retrieval_questions": []
+  },
+  "audio_path": "",
+  "audio_duration_sec": 0,
+  "word_count": 68,
+  "headline": "Weekend Market Recap\n\nSP500: 7,650",
+  "pipeline_errors": [
+    "News: NewsCollector.collect() got an unexpected keyword argument 'watchlist_tickers'"
+  ]
+}

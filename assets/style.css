@@ -1,0 +1,46 @@
+/*
+ * Instinct — Supplementary Stylesheet
+ * ------------------------------------
+ * The primary styles live inline in page.html for single-file portability.
+ * This file provides optional overrides and print styles.
+ */
+
+/* Print styles */
+@media print {
+  body {
+    font-size: 12px;
+    color: #000;
+    background: #fff;
+  }
+
+  .container { max-width: 100%; padding: 0; }
+
+  .audio-player,
+  .nav-pills,
+  .speed-controls,
+  .qa-reveal-btn,
+  .footer-nav { display: none !important; }
+
+  .section { page-break-inside: avoid; }
+
+  a { color: #000; text-decoration: underline; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 10px; color: #666; }
+
+  details.appendix-section { border: 1px solid #ccc; }
+  details.appendix-section[open] summary { border-bottom: 1px solid #ccc; }
+
+  .deal-card { border: 1px solid #ccc; box-shadow: none; }
+  .market-item { border: 1px solid #eee; }
+}
+
+/* High-contrast mode */
+@media (forced-colors: active) {
+  .play-btn,
+  .speed-btn.active,
+  .nav-pill.active { forced-color-adjust: none; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
