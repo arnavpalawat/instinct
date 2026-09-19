@@ -28,7 +28,7 @@ email:
   enabled: false
 
 publishing:
-  base_url: ""  # Set to your GitHub Pages URL, e.g., https://username.github.io/instinct
+  base_url: "https://arnavpalawat.github.io/instinct"
   briefings_dir: "docs/briefings"
   assets_dir: "docs/assets"
 
