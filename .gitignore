@@ -31,7 +31,6 @@ Thumbs.db
 *.key
 service-account*.json
 credentials*.json
-.github/workflows/daily_briefing.yml
 
 # Generated docs (on gh-pages branch only)
 # docs/ is tracked on gh-pages but not main

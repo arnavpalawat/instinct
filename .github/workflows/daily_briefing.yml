@@ -1,0 +1,92 @@
+name: Daily Briefing
+
+on:
+  schedule:
+    # 8 AM CDT = 13:00 UTC (note: CST = 14:00 UTC in winter)
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Override date (YYYY-MM-DD)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Dry run (print only, no publish)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: instinct-briefing
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          BRIEFING_DATE: ${{ github.event.inputs.date }}
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+          fi
+
+          python -m src.pipeline $ARGS
+
+      - name: Deploy to GitHub Pages
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if gh-pages branch exists
+          if git ls-remote --heads origin gh-pages | grep -q gh-pages; then
+            git fetch origin gh-pages
+            git checkout gh-pages
+            # Copy new briefing files from main's docs/
+            git checkout main -- docs/
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . 2>/dev/null || true
+            git checkout main -- docs/
+          fi
+
+          # Move docs contents to root for GitHub Pages
+          if [ -d docs ]; then
+            cp -r docs/* . 2>/dev/null || true
+            rm -rf docs
+          fi
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to deploy"
+          else
+            git commit -m "Briefing: $(date +%Y-%m-%d)"
+            git push origin gh-pages
+          fi
