@@ -11,7 +11,8 @@
       "Bash(gh workflow:*)",
       "Bash(gh run:*)",
       "WebSearch",
-      "WebFetch(domain:console.groq.com)"
+      "WebFetch(domain:console.groq.com)",
+      "Bash(git:*)"
     ]
   }
 }
