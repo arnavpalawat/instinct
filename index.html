@@ -5,54 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Instinct | Briefing Archive</title>
 <meta name="description" content="Archive of Instinct daily financial briefings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:          #ffffff;
-  --bg-surface:  #f6f7f9;
-  --bg-card:     #ffffff;
-  --border:      #d8dbe0;
-  --border-light:#e9ebef;
-  --text:        #1a1d23;
-  --text-2:      #4a4f5c;
-  --text-3:      #7a7f8c;
-  --accent:      #2563eb;
-  --accent-hover:#1d4ed8;
-  --accent-bg:   #eff4ff;
-  --green:       #16a34a;
-  --red:         #dc2626;
-  --card-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-  --radius:      6px;
-  --radius-lg:   10px;
-  --font:        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono:   "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --bg:          #fafaf9;
+  --bg-surface:  #ffffff;
+  --border:      #e7e5e4;
+  --border-light:#f5f5f4;
+  --text:        #1c1917;
+  --text-2:      #44403c;
+  --text-3:      #78716c;
+  --accent:      #b91c1c;
+  --accent-hover:#991b1b;
+  --accent-bg:   #fef2f2;
+  --card-shadow: 0 1px 3px rgba(0,0,0,.04);
+  --radius:      4px;
+  --serif:       "Instrument Serif", "Georgia", "Times New Roman", serif;
+  --sans:        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono:        "JetBrains Mono", "SF Mono", Menlo, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg:          #0f1117;
-    --bg-surface:  #181a22;
-    --bg-card:     #1e2029;
-    --border:      #2e3140;
-    --border-light:#252731;
-    --text:        #e8eaed;
-    --text-2:      #a1a6b4;
-    --text-3:      #6b7085;
-    --accent:      #5b8def;
-    --accent-hover:#7aa5ff;
-    --accent-bg:   #1a2744;
-    --green:       #4ade80;
-    --red:         #f87171;
-    --card-shadow: 0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+    --bg:          #0c0a09;
+    --bg-surface:  #1c1917;
+    --border:      #292524;
+    --border-light:#1c1917;
+    --text:        #fafaf9;
+    --text-2:      #d6d3d1;
+    --text-3:      #a8a29e;
+    --accent:      #fca5a5;
+    --accent-hover:#fecaca;
+    --accent-bg:   #451a1a;
+    --card-shadow: none;
   }
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font);
-  font-size: 15px;
+  font-family: var(--sans);
+  font-size: 16px;
   line-height: 1.65;
   color: var(--text);
   background: var(--bg);
@@ -62,7 +57,7 @@ body {
 .container {
   max-width: 680px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
 a { color: var(--accent); text-decoration: none; }
@@ -70,59 +65,47 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 
 /* Header */
 .header {
-  border-bottom: 1px solid var(--border);
-  padding: 32px 0 24px;
+  border-bottom: 3px double var(--border);
+  padding: 28px 0 20px;
+  text-align: center;
 }
 
-.header-brand {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.header-logo {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.header-name {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 400;
   color: var(--text);
+  line-height: 1.1;
 }
 
-.header-sep { color: var(--text-3); font-weight: 300; }
-
-.header-type {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-2);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.header-rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 12px 0 8px;
 }
 
 .header-sub {
-  margin-top: 6px;
   font-size: 13px;
   color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Edition List */
 .editions {
-  padding: 8px 0 40px;
+  padding: 8px 0 48px;
 }
 
 .edition-card {
   display: block;
-  padding: 18px 0;
+  padding: 20px 0;
   border-bottom: 1px solid var(--border-light);
   text-decoration: none;
   color: inherit;
-  transition: background .1s;
 }
 
-.edition-card:hover {
-  text-decoration: none;
-}
-
-.edition-card:first-child { padding-top: 16px; }
+.edition-card:hover { text-decoration: none; }
+.edition-card:first-child { padding-top: 20px; }
 
 .edition-top {
   display: flex;
@@ -133,61 +116,50 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 }
 
 .edition-date {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .edition-meta {
-  display: flex;
-  gap: 12px;
   font-size: 12px;
   color: var(--text-3);
-  font-family: var(--font-mono);
+  font-family: var(--mono);
 }
 
 .edition-headline {
-  margin: 4px 0 0;
-  font-size: 15px;
-  color: var(--text-2);
-  line-height: 1.4;
+  margin: 6px 0 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.3;
 }
 
-.edition-headline:hover {
+.edition-card:hover .edition-headline {
   color: var(--accent);
-}
-
-.edition-badge {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 1px 6px;
-  border-radius: 3px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  margin-left: 6px;
-  vertical-align: middle;
 }
 
 /* Empty state */
 .empty {
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
   color: var(--text-3);
 }
 
-.empty-icon {
-  font-size: 48px;
-  margin-bottom: 12px;
-  opacity: .4;
+.empty p:first-child {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--text-2);
+  margin-bottom: 8px;
 }
 
 /* Footer */
 .footer {
-  border-top: 1px solid var(--border);
-  padding: 20px 0 40px;
+  border-top: 3px double var(--border);
+  padding: 20px 0 48px;
   font-size: 12px;
   color: var(--text-3);
   text-align: center;
@@ -199,11 +171,8 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 <div class="container">
 
   <header class="header">
-    <div class="header-brand">
-      <span class="header-logo">Instinct</span>
-      <span class="header-sep">/</span>
-      <span class="header-type">Archive</span>
-    </div>
+    <div class="header-name">Instinct</div>
+    <hr class="header-rule">
     <div class="header-sub">
       1 edition published
     </div>
@@ -212,11 +181,11 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
   <div class="editions">
     
       
-      <a class="edition-card" href="briefings/2026-09-19/index.html">
+      <a class="edition-card" href="briefings/2026-09-20/index.html">
         <div class="edition-top">
-          <span class="edition-date">Sat, Sep 19, 2026</span>
+          <span class="edition-date">Sun, Sep 20, 2026</span>
           <div class="edition-meta">
-            <span>68w</span>
+            <span>131w</span>
           </div>
         </div>
         
@@ -230,7 +199,7 @@ SP500: 7,650</div>
   </div>
 
   <footer class="footer">
-    Generated 2026-09-19 22:49 UTC
+    Generated 2026-09-20 01:37 UTC
   </footer>
 
 </div>

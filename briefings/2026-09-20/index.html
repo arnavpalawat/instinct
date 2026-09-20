@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instinct | Sun, Sep 20, 2026 | Weekend Market Recap
+
+SP500: 7,650</title>
+<meta name="description" content="Weekend Market Recap
+
+SP500: 7,650 — Sun, Sep 20, 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #fafaf9;
+  --bg-surface:  #ffffff;
+  --bg-card:     #ffffff;
+  --bg-code:     #f5f5f4;
+  --border:      #e7e5e4;
+  --border-light:#f5f5f4;
+  --text:        #1c1917;
+  --text-2:      #44403c;
+  --text-3:      #78716c;
+  --accent:      #b91c1c;
+  --accent-hover:#991b1b;
+  --accent-bg:   #fef2f2;
+  --green:       #15803d;
+  --red:         #b91c1c;
+  --orange:      #c2410c;
+  --card-shadow: 0 1px 3px rgba(0,0,0,.04);
+  --radius:      4px;
+  --radius-lg:   8px;
+  --serif:       "Instrument Serif", "Georgia", "Times New Roman", serif;
+  --sans:        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono:        "JetBrains Mono", "SF Mono", Menlo, monospace;
+  --max-w:       680px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #0c0a09;
+    --bg-surface:  #1c1917;
+    --bg-card:     #1c1917;
+    --bg-code:     #292524;
+    --border:      #292524;
+    --border-light:#1c1917;
+    --text:        #fafaf9;
+    --text-2:      #d6d3d1;
+    --text-3:      #a8a29e;
+    --accent:      #fca5a5;
+    --accent-hover:#fecaca;
+    --accent-bg:   #451a1a;
+    --green:       #86efac;
+    --red:         #fca5a5;
+    --orange:      #fdba74;
+    --card-shadow: none;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- MASTHEAD ---- */
+.masthead {
+  border-bottom: 3px double var(--border);
+  padding: 20px 0 16px;
+  text-align: center;
+}
+.masthead-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.masthead-name {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  line-height: 1.1;
+}
+.masthead-rule {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 12px 0 8px;
+}
+.masthead-meta {
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.masthead-meta span + span::before {
+  content: "\00b7";
+  margin: 0 8px;
+}
+
+/* ---- ARTICLE CONTAINER ---- */
+.article {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---- HEADLINE ---- */
+.article-headline {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin: 32px 0 16px;
+  letter-spacing: -0.3px;
+}
+
+.article-deck {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text-2);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+/* ---- ERROR BANNER ---- */
+.error-banner {
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  margin: 16px 0 24px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.error-banner strong { color: var(--accent); }
+.error-banner ul { margin: 4px 0 0; padding-left: 18px; }
+
+/* ---- NAV (table of contents) ---- */
+.toc {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  overflow-x: auto;
+}
+.toc a {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  transition: all .15s;
+  white-space: nowrap;
+}
+.toc a:hover, .toc a.active {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* ---- SECTIONS ---- */
+.section {
+  padding: 32px 0 28px;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-of-type { border-bottom: none; }
+
+.section-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.section-body {
+  color: var(--text-2);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.section-body p { margin: 0 0 14px; }
+.section-body p:last-child { margin-bottom: 0; }
+.section-body ul, .section-body ol { padding-left: 20px; margin: 0 0 14px; }
+.section-body li { margin-bottom: 6px; }
+.section-body strong { color: var(--text); font-weight: 600; }
+.section-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 16px;
+  margin: 16px 0;
+  font-style: italic;
+  color: var(--text-3);
+}
+
+/* ---- MARKET GRID ---- */
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  overflow: hidden;
+}
+.market-cell {
+  background: var(--bg-surface);
+  padding: 12px;
+  text-align: center;
+}
+.market-cell-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+}
+.market-cell-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--text);
+  margin: 2px 0;
+}
+.market-cell-change {
+  font-size: 12px;
+  font-family: var(--mono);
+  font-weight: 600;
+}
+.chg-up { color: var(--green); }
+.chg-down { color: var(--red); }
+.chg-flat { color: var(--text-3); }
+
+/* ---- DEAL CARD ---- */
+.deal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: var(--card-shadow);
+}
+.deal-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.deal-card-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text);
+}
+.deal-card-type {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.deal-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.deal-metric {
+  background: var(--bg-code);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.deal-metric-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+.deal-metric-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--mono);
+}
+.deal-detail {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 6px 0;
+}
+.deal-detail-label {
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* ---- INTERVIEW Q&A ---- */
+.qa-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin: 14px 0;
+}
+.qa-question {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.qa-question::before {
+  content: "Q";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.qa-reveal-btn {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  margin-bottom: 8px;
+}
+.qa-reveal-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.qa-answer {
+  display: none;
+  padding: 14px 0 0 34px;
+  color: var(--text-2);
+  border-top: 1px solid var(--border);
+  margin-top: 10px;
+  padding-top: 14px;
+  line-height: 1.7;
+}
+.qa-answer.visible { display: block; }
+.qa-answer::before {
+  content: "A";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: var(--radius);
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  float: left;
+  margin-left: -34px;
+}
+
+/* ---- APPENDIX ---- */
+.appendix {
+  padding: 28px 0;
+}
+.appendix-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+details.appendix-section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+details.appendix-section summary {
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  background: var(--bg-surface);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+details.appendix-section summary::-webkit-details-marker { display: none; }
+details.appendix-section summary::after {
+  content: "+";
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+details.appendix-section[open] summary::after { content: "\2212"; }
+details.appendix-section .appendix-content {
+  padding: 16px 18px;
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.appendix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: var(--mono);
+}
+.appendix-table th, .appendix-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.appendix-table th {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  background: var(--bg-code);
+}
+.appendix-list { padding-left: 18px; margin: 0; }
+.appendix-list li { margin-bottom: 8px; }
+.appendix-list a { word-break: break-all; color: var(--accent); }
+
+/* ---- FOOTER ---- */
+.footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.footer-inner {
+  border-top: 3px double var(--border);
+  padding: 20px 0 48px;
+}
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.footer-nav a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.footer-nav a:hover { text-decoration: underline; }
+.footer-nav .disabled {
+  color: var(--text-3);
+  pointer-events: none;
+}
+.footer-meta {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* ---- UTILITIES ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+.text-mono { font-family: var(--mono); }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-name">Instinct</div>
+    <hr class="masthead-rule">
+    <div class="masthead-meta">
+      <span>Sun, Sep 20, 2026</span>
+      <span>131 words</span>
+    </div>
+  </div>
+</header>
+
+<div class="article">
+
+  <!-- HEADLINE -->
+  
+  <h1 class="article-headline">Weekend Market Recap
+
+SP500: 7,650</h1>
+  
+
+  <!-- PIPELINE ERRORS -->
+  
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc" id="toc">
+    
+      
+    <a href="#section-opening_brief">Opening Brief</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    <a href="#appendix">Appendix</a>
+  </nav>
+
+  <!-- ============================================================
+       SECTIONS
+       ============================================================ -->
+
+  
+  
+  <section class="section" id="section-opening_brief">
+    <div class="section-kicker">Section 1</div>
+    <h2 class="section-title">Opening Brief</h2>
+    <div class="section-body">Weekend Market Recap
+
+SP500: 7,650.50 (+0.17%)
+NASDAQ: 26,522.54 (+0.39%)
+DJIA: 51,682.64 (-0.18%)
+Russell2000: 2,860.40 (-0.50%)
+
+This week's top stories:
+  - Why Private Equity? Why Now? Reasons to Invest in Private Equity in 2026 - KKR: A Leading Global Investment Firm (google_news)
+  - Accel-KKR: software-specialist PE spanning buyouts, growth and credit - Dealroom (google_news)
+  - UGI Leader’s M&A Record Could Bolster KKR’s Buyout Effort - WSJ (google_news)
+  - KKR Wraps Up $2.1 Billion Leveraged Loan for Integer Acquisition - Bloomberg.com (google_news)
+  - KKR Announces Strategic Acquisition of HealthCare Royalty Partners, Expanding the Firm’s Health Care Franchise and Enhancing its Life Sciences Strategy - businesswire.com (google_news)
+
+Deal activity:
+  - Expand Energy / Twin Eagle — $1,250M (rumored)
+  - Ipsen / Kartos Therapeutics (rumored)
+  - LY joins Bain-backed bid / out Japan's Kakaku (rumored)</div>
+  </section>
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <!-- APPENDIX -->
+  <div class="appendix" id="appendix">
+    <h2 class="appendix-title">Appendix</h2>
+
+    
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+</div><!-- /.article -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-nav">
+      
+        <span class="disabled">&larr; Previous</span>
+      
+
+      <a href="https://arnavpalawat.github.io/instinct/index.html">Archive</a>
+
+      
+        <span class="disabled">Next &rarr;</span>
+      
+    </div>
+    <div class="footer-meta">
+      Generated 2026-09-20 01:37 UTC
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  "use strict";
+
+  /* --- Smooth scroll for TOC --- */
+  document.querySelectorAll(".toc a").forEach(function(link) {
+    link.addEventListener("click", function(e) {
+      var href = this.getAttribute("href");
+      if (href && href.charAt(0) === "#") {
+        e.preventDefault();
+        var target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          document.querySelectorAll(".toc a").forEach(function(l) { l.classList.remove("active"); });
+          this.classList.add("active");
+        }
+      }
+    });
+  });
+
+  /* --- Active TOC on scroll --- */
+  var sections = document.querySelectorAll(".section, .appendix");
+  var tocLinks = document.querySelectorAll(".toc a");
+  var scrollTimer;
+  window.addEventListener("scroll", function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      var scrollPos = window.scrollY + 120;
+      sections.forEach(function(sec) {
+        var id = sec.getAttribute("id");
+        if (!id) return;
+        var link = document.querySelector('.toc a[href="#' + id + '"]');
+        if (!link) return;
+        if (sec.offsetTop <= scrollPos && sec.offsetTop + sec.offsetHeight > scrollPos) {
+          tocLinks.forEach(function(l) { l.classList.remove("active"); });
+          link.classList.add("active");
+        }
+      });
+    }, 50);
+  });
+
+  /* --- Interview Q&A reveal --- */
+  document.querySelectorAll(".qa-reveal-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var answer = this.nextElementSibling;
+      if (answer && answer.classList.contains("qa-answer")) {
+        answer.classList.toggle("visible");
+        this.textContent = answer.classList.contains("visible") ? "Hide Answer" : "Reveal Answer";
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
