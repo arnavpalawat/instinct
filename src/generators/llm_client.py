@@ -13,7 +13,7 @@ class LLMClient:
     BACKOFF_DELAYS = [15, 60, 120]
 
     def __init__(self, config: dict):
-        self.model = config.get("model", "llama-3.3-70b-versatile")
+        self.model = config.get("model", "openai/gpt-oss-120b")
         self.temperature = config.get("temperature", 0.3)
         self.max_tokens = config.get("max_tokens_per_section", 1500)
         self.max_retries = config.get("max_retries", 3)

@@ -50,12 +50,15 @@ class SiteBuilder:
         # Determine previous/next briefing dates for navigation
         prev_date, next_date = self._adjacent_dates(briefing.date)
 
+        # Collect articles with images for the lead image
+        top_articles = []
+        if hasattr(briefing, "top_articles"):
+            top_articles = briefing.top_articles[:5]
+
         template = self.template_env.get_template("page.html")
         html = template.render(
             briefing=briefing,
             date_formatted=self._format_date(briefing.date),
-            duration_formatted=self._format_duration(briefing.audio_duration_sec),
-            has_audio=bool(briefing.audio_path),
             sections=briefing.sections,
             section_labels=SECTION_LABELS,
             section_order=SECTION_ORDER,
@@ -69,6 +72,7 @@ class SiteBuilder:
             generated_at=briefing.generated_at,
             word_count=briefing.word_count,
             pipeline_errors=briefing.pipeline_errors,
+            top_articles=top_articles,
         )
 
         output_path = os.path.join(date_dir, "index.html")

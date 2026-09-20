@@ -8,374 +8,116 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:          #fafaf9;
-  --bg-surface:  #ffffff;
-  --bg-card:     #ffffff;
-  --bg-code:     #f5f5f4;
-  --border:      #e7e5e4;
-  --border-light:#f5f5f4;
-  --text:        #1c1917;
-  --text-2:      #44403c;
-  --text-3:      #78716c;
-  --accent:      #b91c1c;
-  --accent-hover:#991b1b;
-  --accent-bg:   #fef2f2;
-  --green:       #15803d;
-  --red:         #b91c1c;
-  --orange:      #c2410c;
-  --card-shadow: 0 1px 3px rgba(0,0,0,.04);
-  --radius:      4px;
-  --radius-lg:   8px;
-  --serif:       "Instrument Serif", "Georgia", "Times New Roman", serif;
-  --sans:        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --mono:        "JetBrains Mono", "SF Mono", Menlo, monospace;
-  --max-w:       680px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:          #0c0a09;
-    --bg-surface:  #1c1917;
-    --bg-card:     #1c1917;
-    --bg-code:     #292524;
-    --border:      #292524;
-    --border-light:#1c1917;
-    --text:        #fafaf9;
-    --text-2:      #d6d3d1;
-    --text-3:      #a8a29e;
-    --accent:      #fca5a5;
-    --accent-hover:#fecaca;
-    --accent-bg:   #451a1a;
-    --green:       #86efac;
-    --red:         #fca5a5;
-    --orange:      #fdba74;
-    --card-shadow: none;
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'media',
+    corePlugins: { preflight: true },
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+          sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', '"SF Mono"', 'monospace'],
+        },
+      },
+    },
   }
-}
+</script>
+<style>
+/* Scrollbar-hide utility */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; }
-
-body {
-  font-family: var(--sans);
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--text);
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ---- MASTHEAD ---- */
-.masthead {
-  border-bottom: 3px double var(--border);
-  padding: 20px 0 16px;
-  text-align: center;
-}
-.masthead-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-.masthead-name {
-  font-family: var(--serif);
-  font-size: 42px;
-  font-weight: 400;
-  letter-spacing: -0.5px;
-  color: var(--text);
-  line-height: 1.1;
-}
-.masthead-rule {
-  width: 100%;
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 12px 0 8px;
-}
-.masthead-meta {
-  font-size: 13px;
-  color: var(--text-3);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-.masthead-meta span + span::before {
-  content: "\00b7";
-  margin: 0 8px;
-}
-
-/* ---- ARTICLE CONTAINER ---- */
-.article {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ---- HEADLINE ---- */
-.article-headline {
-  font-family: var(--serif);
-  font-size: 36px;
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--text);
-  margin: 32px 0 16px;
-  letter-spacing: -0.3px;
-}
-
-.article-deck {
-  font-size: 18px;
-  line-height: 1.5;
-  color: var(--text-2);
-  margin-bottom: 24px;
-  font-style: italic;
-}
-
-/* ---- ERROR BANNER ---- */
-.error-banner {
-  background: var(--accent-bg);
-  border-left: 3px solid var(--accent);
-  padding: 12px 16px;
-  margin: 16px 0 24px;
-  font-size: 13px;
-  color: var(--text-2);
-}
-.error-banner strong { color: var(--accent); }
-.error-banner ul { margin: 4px 0 0; padding-left: 18px; }
-
-/* ---- NAV (table of contents) ---- */
-.toc {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 0;
-  margin-bottom: 8px;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  overflow-x: auto;
-}
-.toc a {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text-3);
-  text-decoration: none;
-  padding: 4px 10px;
-  border-radius: var(--radius);
-  transition: all .15s;
-  white-space: nowrap;
-}
-.toc a:hover, .toc a.active {
-  color: var(--accent);
-  background: var(--accent-bg);
-}
-
-/* ---- SECTIONS ---- */
-.section {
-  padding: 32px 0 28px;
-  border-bottom: 1px solid var(--border);
-}
-.section:last-of-type { border-bottom: none; }
-
-.section-kicker {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 4px;
-}
-.section-title {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-.section-body {
-  color: var(--text-2);
-  font-size: 16px;
-  line-height: 1.75;
-}
-.section-body p { margin: 0 0 14px; }
-.section-body p:last-child { margin-bottom: 0; }
-.section-body ul, .section-body ol { padding-left: 20px; margin: 0 0 14px; }
-.section-body li { margin-bottom: 6px; }
-.section-body strong { color: var(--text); font-weight: 600; }
-.section-body blockquote {
-  border-left: 3px solid var(--accent);
-  padding-left: 16px;
-  margin: 16px 0;
-  font-style: italic;
-  color: var(--text-3);
-}
-
-/* ---- MARKET GRID ---- */
-.market-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin: 20px 0;
-  overflow: hidden;
-}
-.market-cell {
-  background: var(--bg-surface);
-  padding: 12px;
-  text-align: center;
-}
-.market-cell-label {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text-3);
-}
-.market-cell-value {
-  font-size: 16px;
-  font-weight: 700;
-  font-family: var(--mono);
-  color: var(--text);
-  margin: 2px 0;
-}
-.market-cell-change {
-  font-size: 12px;
-  font-family: var(--mono);
-  font-weight: 600;
-}
-.chg-up { color: var(--green); }
-.chg-down { color: var(--red); }
-.chg-flat { color: var(--text-3); }
-
-/* ---- DEAL CARD ---- */
-.deal-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  margin: 20px 0;
-  box-shadow: var(--card-shadow);
-}
-.deal-card-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.deal-card-title {
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 400;
-  color: var(--text);
-}
-.deal-card-type {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 3px 10px;
-  border-radius: var(--radius);
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-.deal-metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.deal-metric {
-  background: var(--bg-code);
-  border-radius: var(--radius);
-  padding: 12px;
-}
-.deal-metric-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text-3);
-  margin-bottom: 2px;
-}
-.deal-metric-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-  font-family: var(--mono);
-}
-.deal-detail {
-  font-size: 14px;
-  color: var(--text-2);
-  margin: 6px 0;
-}
-.deal-detail-label {
-  font-weight: 700;
-  color: var(--text-3);
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: 0.5px;
-}
-
-/* ---- INTERVIEW Q&A ---- */
+/* Q&A class overrides (LLM-generated HTML uses these class names) */
 .qa-item {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  background: #fff;
+  border: 1px solid #e7e5e4;
+  border-radius: 12px;
   padding: 20px;
-  margin: 14px 0;
+  margin: 12px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark) {
+  .qa-item {
+    background: #1c1917;
+    border-color: #44403c;
+  }
 }
 .qa-question {
   font-weight: 600;
-  color: var(--text);
-  margin-bottom: 10px;
+  color: #1c1917;
+  margin-bottom: 12px;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  .qa-question { color: #fafaf9; }
 }
 .qa-question::before {
   content: "Q";
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  height: 24px;
-  border-radius: var(--radius);
-  background: var(--accent);
+  min-width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #b91c1c;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
 }
+@media (prefers-color-scheme: dark) {
+  .qa-question::before { background: #ef4444; }
+}
 .qa-reveal-btn {
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-3);
-  font-size: 12px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e7e5e4;
+  background: #fafaf9;
+  color: #78716c;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all .15s;
   margin-bottom: 8px;
 }
+@media (prefers-color-scheme: dark) {
+  .qa-reveal-btn {
+    border-color: #44403c;
+    background: #292524;
+    color: #a8a29e;
+  }
+}
 .qa-reveal-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+@media (prefers-color-scheme: dark) {
+  .qa-reveal-btn:hover {
+    border-color: #ef4444;
+    color: #fca5a5;
+  }
 }
 .qa-answer {
   display: none;
-  padding: 14px 0 0 34px;
-  color: var(--text-2);
-  border-top: 1px solid var(--border);
+  padding: 14px 0 0 36px;
+  color: #44403c;
+  border-top: 1px solid #e7e5e4;
   margin-top: 10px;
   padding-top: 14px;
   line-height: 1.7;
+}
+@media (prefers-color-scheme: dark) {
+  .qa-answer {
+    color: #d6d3d1;
+    border-top-color: #44403c;
+  }
 }
 .qa-answer.visible { display: block; }
 .qa-answer::before {
@@ -383,156 +125,109 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  height: 24px;
-  border-radius: var(--radius);
-  background: var(--green);
+  min-width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #15803d;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
   float: left;
-  margin-left: -34px;
+  margin-left: -36px;
 }
 
-/* ---- APPENDIX ---- */
-.appendix {
-  padding: 28px 0;
+/* Print styles */
+@media print {
+  .toc-nav, .market-pulse-strip { display: none !important; }
+  .section { page-break-inside: avoid; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 10px; color: #666; }
 }
-.appendix-title {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 400;
-  margin-bottom: 16px;
-  color: var(--text);
-}
-details.appendix-section {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 8px;
-  overflow: hidden;
-}
-details.appendix-section summary {
-  padding: 14px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-2);
-  cursor: pointer;
-  background: var(--bg-surface);
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-details.appendix-section summary::-webkit-details-marker { display: none; }
-details.appendix-section summary::after {
-  content: "+";
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--text-3);
-}
-details.appendix-section[open] summary::after { content: "\2212"; }
-details.appendix-section .appendix-content {
-  padding: 16px 18px;
-  font-size: 14px;
-  color: var(--text-2);
-  line-height: 1.6;
-}
-.appendix-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  font-family: var(--mono);
-}
-.appendix-table th, .appendix-table td {
-  padding: 8px 12px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-.appendix-table th {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-3);
-  background: var(--bg-code);
-}
-.appendix-list { padding-left: 18px; margin: 0; }
-.appendix-list li { margin-bottom: 8px; }
-.appendix-list a { word-break: break-all; color: var(--accent); }
-
-/* ---- FOOTER ---- */
-.footer {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-.footer-inner {
-  border-top: 3px double var(--border);
-  padding: 20px 0 48px;
-}
-.footer-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-.footer-nav a {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
-}
-.footer-nav a:hover { text-decoration: underline; }
-.footer-nav .disabled {
-  color: var(--text-3);
-  pointer-events: none;
-}
-.footer-meta {
-  font-size: 12px;
-  color: var(--text-3);
-  text-align: center;
-}
-
-/* ---- UTILITIES ---- */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  border: 0;
-}
-.text-mono { font-family: var(--mono); }
 </style>
 </head>
-<body>
+<body class="bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-sans antialiased">
 
-<!-- MASTHEAD -->
-<header class="masthead">
-  <div class="masthead-inner">
-    <div class="masthead-name">Instinct</div>
-    <hr class="masthead-rule">
-    <div class="masthead-meta">
+<!-- MASTHEAD (full-bleed) -->
+<header class="border-b-4 border-double border-stone-200 dark:border-stone-800">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 pt-6 pb-4 text-center">
+    <div class="font-serif text-[42px] tracking-tight text-stone-900 dark:text-stone-100 leading-none">Instinct</div>
+    <hr class="border-t border-stone-200 dark:border-stone-800 my-3">
+    <div class="text-xs font-medium tracking-wider uppercase text-stone-400 dark:text-stone-500 space-x-2">
       <span>{{ date_formatted }}</span>
-      {% if word_count %}<span>{{ "{:,}".format(word_count) }} words</span>{% endif %}
+      {% if word_count %}<span>&middot;</span><span>{{ "{:,}".format(word_count) }} words</span>{% endif %}
     </div>
   </div>
 </header>
 
-<div class="article">
+<!-- MARKET PULSE STRIP (full-bleed) -->
+{% if market %}
+<div class="market-pulse-strip bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 py-2.5 flex items-center gap-4 md:gap-6 overflow-x-auto scrollbar-hide text-sm">
+    {% if market.get("indices") and market.get("index_changes") %}
+      {% set sp = market.indices.get("S&P 500") %}
+      {% if sp is not none %}
+        {% set sp_chg = market.index_changes.get("S&P 500") %}
+        <div class="flex items-center gap-2 whitespace-nowrap">
+          <span class="text-stone-500 dark:text-stone-400 font-medium text-xs uppercase tracking-wide">S&P 500</span>
+          <span class="font-mono font-bold text-stone-900 dark:text-stone-100">{{ "{:,.0f}".format(sp) }}</span>
+          {% if sp_chg is not none %}
+          <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-bold {{ 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400' if sp_chg > 0 else ('bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' if sp_chg < 0 else 'bg-stone-200 text-stone-500 dark:bg-stone-700 dark:text-stone-400') }}">
+            {{ "▲" if sp_chg > 0 else ("▼" if sp_chg < 0 else "—") }}{{ "{:+.2f}".format(sp_chg) }}%
+          </span>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
 
-  <!-- HEADLINE -->
+    {% if market.get("yields") %}
+      {% set y10 = market.yields.get("10Y") %}
+      {% if y10 is not none %}
+        {% set y10_chg = market.get("yield_changes_bps", {}).get("10Y") %}
+        <div class="flex items-center gap-2 whitespace-nowrap">
+          <span class="text-stone-500 dark:text-stone-400 font-medium text-xs uppercase tracking-wide">10Y Yield</span>
+          <span class="font-mono font-bold text-stone-900 dark:text-stone-100">{{ "{:.3f}".format(y10) }}%</span>
+          {% if y10_chg is not none %}
+          <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-bold {{ 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' if y10_chg > 0 else ('bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400' if y10_chg < 0 else 'bg-stone-200 text-stone-500 dark:bg-stone-700 dark:text-stone-400') }}">
+            {{ "▲" if y10_chg > 0 else ("▼" if y10_chg < 0 else "—") }}{{ "{:+.1f}".format(y10_chg) }}bp
+          </span>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if market.get("vix") is not none %}
+    <div class="flex items-center gap-2 whitespace-nowrap">
+      <span class="text-stone-500 dark:text-stone-400 font-medium text-xs uppercase tracking-wide">VIX</span>
+      <span class="font-mono font-bold {{ 'text-emerald-600 dark:text-emerald-400' if market.vix < 15 else ('text-amber-600 dark:text-amber-400' if market.vix < 25 else 'text-red-600 dark:text-red-400') }}">{{ "{:.1f}".format(market.vix) }}</span>
+    </div>
+    {% endif %}
+
+    {% if market.get("commodities") and market.commodities.get("Gold") is not none %}
+    <div class="flex items-center gap-2 whitespace-nowrap">
+      <span class="text-stone-500 dark:text-stone-400 font-medium text-xs uppercase tracking-wide">Gold</span>
+      <span class="font-mono font-bold text-stone-900 dark:text-stone-100">${{ "{:,.0f}".format(market.commodities["Gold"]) }}</span>
+    </div>
+    {% endif %}
+
+    {% if market.get("fx") and market.fx.get("DXY") is not none %}
+    <div class="flex items-center gap-2 whitespace-nowrap">
+      <span class="text-stone-500 dark:text-stone-400 font-medium text-xs uppercase tracking-wide">DXY</span>
+      <span class="font-mono font-bold text-stone-900 dark:text-stone-100">{{ "{:.2f}".format(market.fx["DXY"]) }}</span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<!-- HEADLINE -->
+<div class="max-w-5xl mx-auto px-4 md:px-6">
   {% if headline %}
-  <h1 class="article-headline">{{ headline }}</h1>
+  <h1 class="font-serif text-[28px] md:text-4xl font-normal leading-tight text-stone-900 dark:text-stone-100 mt-8 mb-4 tracking-tight">{{ headline }}</h1>
   {% endif %}
 
-  <!-- PIPELINE ERRORS -->
   {% if pipeline_errors %}
-  <div class="error-banner">
-    <strong>Pipeline notices:</strong>
-    <ul>
+  <div class="bg-red-50 dark:bg-red-950/30 border-l-4 border-red-700 dark:border-red-500 p-4 mb-6 text-sm text-stone-600 dark:text-stone-300 rounded-r-lg">
+    <strong class="text-red-700 dark:text-red-400">Pipeline notices:</strong>
+    <ul class="mt-1 pl-4 list-disc">
       {% for err in pipeline_errors %}
       <li>{{ err }}</li>
       {% endfor %}
@@ -540,311 +235,409 @@ details.appendix-section .appendix-content {
   </div>
   {% endif %}
 
-  <!-- TABLE OF CONTENTS -->
-  <nav class="toc" id="toc">
+  <!-- LEAD IMAGE -->
+  {% if top_articles and top_articles[0].image_url %}
+  <figure class="mt-4 mb-6">
+    <img src="{{ top_articles[0].image_url }}" alt="{{ top_articles[0].title }}" loading="lazy" class="w-full max-h-[400px] object-cover rounded-xl border border-stone-200 dark:border-stone-800">
+    <figcaption class="text-xs text-stone-400 dark:text-stone-500 mt-2 italic">{{ top_articles[0].title }} — {{ top_articles[0].source }}</figcaption>
+  </figure>
+  {% endif %}
+</div>
+
+<!-- STICKY TOC NAVIGATION -->
+<nav class="toc-nav sticky top-0 z-40 bg-stone-50/90 dark:bg-stone-950/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-800" id="toc">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 py-2 flex gap-1.5 overflow-x-auto scrollbar-hide">
     {% for key in section_order %}
       {% if sections.get(key) %}
-    <a href="#section-{{ key }}">{{ section_labels[key] }}</a>
+    <a href="#section-{{ key }}" class="toc-link text-xs font-semibold uppercase tracking-wider text-stone-400 dark:text-stone-500 px-3 py-1.5 rounded-full whitespace-nowrap transition-all hover:text-red-700 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-950/30">{{ section_labels[key] }}</a>
       {% endif %}
     {% endfor %}
-    <a href="#appendix">Appendix</a>
-  </nav>
+    <a href="#appendix" class="toc-link text-xs font-semibold uppercase tracking-wider text-stone-400 dark:text-stone-500 px-3 py-1.5 rounded-full whitespace-nowrap transition-all hover:text-red-700 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-950/30">Appendix</a>
+  </div>
+</nav>
 
-  <!-- ============================================================
-       SECTIONS
-       ============================================================ -->
+<main>
 
-  {# --- Opening Brief --- #}
+  <!-- OPENING BRIEF (readable width) -->
   {% if sections.get("opening_brief") %}
-  <section class="section" id="section-opening_brief">
-    <div class="section-kicker">Section 1</div>
-    <h2 class="section-title">Opening Brief</h2>
-    <div class="section-body">{{ sections.opening_brief | safe }}</div>
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-opening_brief">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 1</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">Opening Brief</h2>
+      <div class="border-l-4 border-red-700 dark:border-red-500 bg-red-50/50 dark:bg-red-950/20 rounded-r-lg p-5 mb-4">
+        <div class="prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100 max-w-none">
+          {{ sections.opening_brief | safe }}
+        </div>
+      </div>
+    </div>
   </section>
   {% endif %}
 
-  {# --- Markets & Macro --- #}
+  <!-- MARKETS & MACRO — Dashboard (wide) -->
   {% if sections.get("markets_macro") %}
-  <section class="section" id="section-markets_macro">
-    <div class="section-kicker">Section 2</div>
-    <h2 class="section-title">Markets &amp; Macro</h2>
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-markets_macro">
+    <div class="max-w-5xl mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 2</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-6">Markets &amp; Macro</h2>
 
-    {% if market %}
-    <div class="market-grid">
-      {% if market.get("indices") %}
-        {% for name, val in market.indices.items() %}
-          {% if val is not none %}
-          <div class="market-cell">
-            <div class="market-cell-label">{{ name }}</div>
-            <div class="market-cell-value">{{ "{:,.0f}".format(val) if val >= 100 else "{:,.2f}".format(val) }}</div>
-            {% if market.get("index_changes") and market.index_changes.get(name) is not none %}
-              {% set chg = market.index_changes[name] %}
-              <div class="market-cell-change {{ 'chg-up' if chg > 0 else ('chg-down' if chg < 0 else 'chg-flat') }}">
-                {{ "{:+.2f}".format(chg) }}%
+      {% if market %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+        {% if market.get("indices") %}
+        <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5">
+          <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-3">Equity Indices</div>
+          <div class="space-y-2.5">
+            {% for name, val in market.indices.items() %}
+              {% if val is not none %}
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-stone-600 dark:text-stone-300 font-medium">{{ name }}</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-sm font-bold text-stone-900 dark:text-stone-100">{{ "{:,.0f}".format(val) if val >= 100 else "{:,.2f}".format(val) }}</span>
+                  {% if market.get("index_changes") and market.index_changes.get(name) is not none %}
+                    {% set chg = market.index_changes[name] %}
+                    <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-bold {{ 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400' if chg > 0 else ('bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' if chg < 0 else 'bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-400') }}">
+                      {{ "▲" if chg > 0 else ("▼" if chg < 0 else "—") }}{{ "{:+.2f}".format(chg) }}%
+                    </span>
+                  {% endif %}
+                </div>
               </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if market.get("yields") %}
+        <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5">
+          <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-3">Fixed Income</div>
+          <div class="space-y-2.5">
+            {% for name, val in market.yields.items() %}
+              {% if val is not none %}
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-stone-600 dark:text-stone-300 font-medium">{{ name }} Yield</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-sm font-bold text-stone-900 dark:text-stone-100">{{ "{:.3f}".format(val) }}%</span>
+                  {% if market.get("yield_changes_bps") and market.yield_changes_bps.get(name) is not none %}
+                    {% set chg = market.yield_changes_bps[name] %}
+                    <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-bold {{ 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' if chg > 0 else ('bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400' if chg < 0 else 'bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-400') }}">
+                      {{ "▲" if chg > 0 else ("▼" if chg < 0 else "—") }}{{ "{:+.1f}".format(chg) }}bp
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if market.get("commodities") or market.get("fx") %}
+        <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5">
+          <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-3">Commodities &amp; FX</div>
+          <div class="space-y-2.5">
+            {% if market.get("commodities") %}
+              {% for name, val in market.commodities.items() %}
+                {% if val is not none %}
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-stone-600 dark:text-stone-300 font-medium">{{ name }}</span>
+                  <span class="font-mono text-sm font-bold text-stone-900 dark:text-stone-100">${{ "{:,.2f}".format(val) }}</span>
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            {% if market.get("fx") %}
+              {% for name, val in market.fx.items() %}
+                {% if val is not none %}
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-stone-600 dark:text-stone-300 font-medium">{{ name }}</span>
+                  <span class="font-mono text-sm font-bold text-stone-900 dark:text-stone-100">{{ "{:.4f}".format(val) if val < 10 else "{:.2f}".format(val) }}</span>
+                </div>
+                {% endif %}
+              {% endfor %}
             {% endif %}
           </div>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
+        </div>
+        {% endif %}
 
-      {% if market.get("yields") %}
-        {% for name, val in market.yields.items() %}
-          {% if val is not none %}
-          <div class="market-cell">
-            <div class="market-cell-label">{{ name }} Yield</div>
-            <div class="market-cell-value">{{ "{:.3f}".format(val) }}%</div>
-            {% if market.get("yield_changes_bps") and market.yield_changes_bps.get(name) is not none %}
-              {% set chg = market.yield_changes_bps[name] %}
-              <div class="market-cell-change {{ 'chg-up' if chg > 0 else ('chg-down' if chg < 0 else 'chg-flat') }}">
-                {{ "{:+.1f}".format(chg) }} bps
-              </div>
+        <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5">
+          <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-3">Volatility &amp; Rates</div>
+          <div class="space-y-2.5">
+            {% if market.get("vix") is not none %}
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-stone-600 dark:text-stone-300 font-medium">VIX</span>
+              <span class="font-mono text-sm font-bold {{ 'text-emerald-600 dark:text-emerald-400' if market.vix < 15 else ('text-amber-600 dark:text-amber-400' if market.vix < 25 else 'text-red-600 dark:text-red-400') }}">{{ "{:.1f}".format(market.vix) }}</span>
+            </div>
+            {% endif %}
+            {% if market.get("yields") and market.yields.get("2Y") is not none %}
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-stone-600 dark:text-stone-300 font-medium">SOFR (proxy: 2Y)</span>
+              <span class="font-mono text-sm font-bold text-stone-900 dark:text-stone-100">{{ "{:.3f}".format(market.yields["2Y"]) }}%</span>
+            </div>
             {% endif %}
           </div>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
+        </div>
 
-      {% if market.get("vix") is not none %}
-      <div class="market-cell">
-        <div class="market-cell-label">VIX</div>
-        <div class="market-cell-value">{{ "{:.1f}".format(market.vix) }}</div>
       </div>
       {% endif %}
 
-      {% if market.get("commodities") %}
-        {% for name, val in market.commodities.items() %}
-          {% if val is not none %}
-          <div class="market-cell">
-            <div class="market-cell-label">{{ name }}</div>
-            <div class="market-cell-value">${{ "{:,.2f}".format(val) }}</div>
+      <div class="max-w-prose mx-auto prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100">
+        {{ sections.markets_macro | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- DEAL OF THE DAY (wide) -->
+  {% if sections.get("deal_of_day") %}
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-deal_of_day">
+    <div class="max-w-5xl mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 3</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-6">Deal of the Day</h2>
+
+      {% if deals %}
+        {% set deal = deals[0] if deals is iterable and deals | length > 0 else none %}
+        {% if deal %}
+        <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl overflow-hidden shadow-sm mb-6">
+          <div class="h-1.5 bg-gradient-to-r from-red-700 via-red-500 to-amber-500"></div>
+          <div class="p-6">
+            <div class="flex items-baseline justify-between flex-wrap gap-3 mb-5 pb-5 border-b border-stone-200 dark:border-stone-700">
+              <h3 class="font-serif text-2xl md:text-[28px] text-stone-900 dark:text-stone-100">
+                {% if deal.acquirer is string %}{{ deal.acquirer }}{% else %}{{ deal.get("acquirer","") }}{% endif %}
+                <span class="text-stone-400 dark:text-stone-500">&rarr;</span>
+                {% if deal.target is string %}{{ deal.target }}{% else %}{{ deal.get("target","") }}{% endif %}
+              </h3>
+              <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">
+                {% if deal.deal_type is string %}{{ deal.deal_type }}{% else %}{{ deal.get("deal_type","") }}{% endif %}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+              {% set ev = deal.ev_mm if deal.ev_mm is defined else deal.get("ev_mm") %}
+              {% if ev %}
+              <div class="bg-stone-50 dark:bg-stone-800 rounded-lg p-4 text-center">
+                <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-1">Enterprise Value</div>
+                <div class="text-xl md:text-2xl font-bold font-mono text-stone-900 dark:text-stone-100">${{ "{:,.0f}".format(ev) }}M</div>
+              </div>
+              {% endif %}
+              {% set evr = deal.ev_revenue if deal.ev_revenue is defined else deal.get("ev_revenue") %}
+              {% if evr %}
+              <div class="bg-stone-50 dark:bg-stone-800 rounded-lg p-4 text-center">
+                <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-1">EV / Revenue</div>
+                <div class="text-xl md:text-2xl font-bold font-mono text-stone-900 dark:text-stone-100">{{ evr }}</div>
+              </div>
+              {% endif %}
+              {% set eve = deal.ev_ebitda if deal.ev_ebitda is defined else deal.get("ev_ebitda") %}
+              {% if eve %}
+              <div class="bg-stone-50 dark:bg-stone-800 rounded-lg p-4 text-center">
+                <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-1">EV / EBITDA</div>
+                <div class="text-xl md:text-2xl font-bold font-mono text-stone-900 dark:text-stone-100">{{ eve }}</div>
+              </div>
+              {% endif %}
+              {% set prem = deal.premium_pct if deal.premium_pct is defined else deal.get("premium_pct") %}
+              {% if prem %}
+              <div class="bg-stone-50 dark:bg-stone-800 rounded-lg p-4 text-center">
+                <div class="text-[10px] font-bold tracking-wider uppercase text-stone-400 dark:text-stone-500 mb-1">Premium</div>
+                <div class="text-xl md:text-2xl font-bold font-mono text-stone-900 dark:text-stone-100">{{ "{:.1f}".format(prem) }}%</div>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              {% set consideration = deal.consideration if deal.consideration is defined else deal.get("consideration","") %}
+              {% if consideration %}
+              <span class="inline-flex items-center gap-1.5 text-xs bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 px-3 py-1.5 rounded-full">
+                <span class="font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider text-[10px]">Consideration</span> {{ consideration }}
+              </span>
+              {% endif %}
+              {% set financing = deal.financing if deal.financing is defined else deal.get("financing","") %}
+              {% if financing %}
+              <span class="inline-flex items-center gap-1.5 text-xs bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 px-3 py-1.5 rounded-full">
+                <span class="font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider text-[10px]">Financing</span> {{ financing }}
+              </span>
+              {% endif %}
+              {% set sector = deal.sector if deal.sector is defined else deal.get("sector","") %}
+              {% if sector %}
+              <span class="inline-flex items-center gap-1.5 text-xs bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 px-3 py-1.5 rounded-full">
+                <span class="font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider text-[10px]">Sector</span> {{ sector }}
+              </span>
+              {% endif %}
+              {% set status = deal.status if deal.status is defined else deal.get("status","") %}
+              {% if status %}
+              <span class="inline-flex items-center gap-1.5 text-xs bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 px-3 py-1.5 rounded-full">
+                <span class="font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider text-[10px]">Status</span> {{ status }}
+              </span>
+              {% endif %}
+            </div>
           </div>
-          {% endif %}
-        {% endfor %}
+        </div>
+        {% endif %}
       {% endif %}
 
-      {% if market.get("fx") %}
-        {% for name, val in market.fx.items() %}
-          {% if val is not none %}
-          <div class="market-cell">
-            <div class="market-cell-label">{{ name }}</div>
-            <div class="market-cell-value">{{ "{:.4f}".format(val) if val < 10 else "{:.2f}".format(val) }}</div>
-          </div>
-          {% endif %}
-        {% endfor %}
+      <div class="max-w-prose mx-auto prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100">
+        {{ sections.deal_of_day | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- PE & PC DEVELOPMENTS (readable) -->
+  {% if sections.get("pe_pc") %}
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-pe_pc">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 4</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">PE &amp; PC Developments</h2>
+      <div class="prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100 max-w-none">
+        {{ sections.pe_pc | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- COMPANY / SECTOR INSIGHT (readable) -->
+  {% if sections.get("company_insight") %}
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-company_insight">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 5</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">Company / Sector Insight</h2>
+      <div class="prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100 max-w-none">
+        {{ sections.company_insight | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- INTERVIEW PRACTICE (readable) -->
+  {% if sections.get("interview_practice") %}
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-interview_practice">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 6</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">Interview Practice</h2>
+      <div id="interview-section">
+        {{ sections.interview_practice | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- WHAT TO WATCH (readable) -->
+  {% if sections.get("what_to_watch") %}
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-what_to_watch">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 7</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">What to Watch</h2>
+      <div class="prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100 max-w-none">
+        {{ sections.what_to_watch | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- APPENDIX (readable) -->
+  <div class="py-8 md:py-10" id="appendix">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <h2 class="font-serif text-2xl font-normal text-stone-900 dark:text-stone-100 mb-5">Appendix</h2>
+
+      {% if appendix.get("full_market_table") %}
+      <details class="group border border-stone-200 dark:border-stone-800 rounded-xl mb-3 overflow-hidden">
+        <summary class="flex items-center justify-between p-4 text-sm font-semibold text-stone-600 dark:text-stone-300 cursor-pointer bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+          <span>Full Market Table</span>
+          <span class="text-lg text-stone-400 transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <div class="p-4 text-sm text-stone-600 dark:text-stone-300 leading-relaxed border-t border-stone-200 dark:border-stone-800">
+          {{ appendix.full_market_table | safe }}
+        </div>
+      </details>
+      {% endif %}
+
+      {% if appendix.get("additional_stories") %}
+      <details class="group border border-stone-200 dark:border-stone-800 rounded-xl mb-3 overflow-hidden">
+        <summary class="flex items-center justify-between p-4 text-sm font-semibold text-stone-600 dark:text-stone-300 cursor-pointer bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+          <span>Additional Stories ({{ appendix.additional_stories | length }})</span>
+          <span class="text-lg text-stone-400 transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <div class="p-4 border-t border-stone-200 dark:border-stone-800">
+          <ul class="list-disc pl-4 space-y-2 text-sm text-stone-600 dark:text-stone-300">
+            {% for story in appendix.additional_stories %}
+            <li>{{ story | safe }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </details>
+      {% endif %}
+
+      {% if appendix.get("source_links") %}
+      <details class="group border border-stone-200 dark:border-stone-800 rounded-xl mb-3 overflow-hidden">
+        <summary class="flex items-center justify-between p-4 text-sm font-semibold text-stone-600 dark:text-stone-300 cursor-pointer bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+          <span>Sources ({{ appendix.source_links | length }})</span>
+          <span class="text-lg text-stone-400 transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <div class="p-4 border-t border-stone-200 dark:border-stone-800">
+          <ul class="list-disc pl-4 space-y-2 text-sm">
+            {% for link in appendix.source_links %}
+            <li>
+              {% if link is mapping %}
+                <a href="{{ link.url }}" target="_blank" rel="noopener" class="text-red-700 dark:text-red-400 hover:underline break-all">{{ link.title or link.url }}</a>
+              {% else %}
+                {{ link | safe }}
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </details>
+      {% endif %}
+
+      {% if appendix.get("glossary_term") and appendix.glossary_term.get("term") %}
+      <details class="group border border-stone-200 dark:border-stone-800 rounded-xl mb-3 overflow-hidden">
+        <summary class="flex items-center justify-between p-4 text-sm font-semibold text-stone-600 dark:text-stone-300 cursor-pointer bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+          <span>Glossary: {{ appendix.glossary_term.term }}</span>
+          <span class="text-lg text-stone-400 transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <div class="p-4 text-sm text-stone-600 dark:text-stone-300 border-t border-stone-200 dark:border-stone-800">
+          <strong class="text-stone-900 dark:text-stone-100">{{ appendix.glossary_term.term }}</strong> &mdash; {{ appendix.glossary_term.definition }}
+        </div>
+      </details>
+      {% endif %}
+
+      {% if appendix.get("retrieval_questions") %}
+      <details class="group border border-stone-200 dark:border-stone-800 rounded-xl mb-3 overflow-hidden">
+        <summary class="flex items-center justify-between p-4 text-sm font-semibold text-stone-600 dark:text-stone-300 cursor-pointer bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+          <span>Retrieval Questions ({{ appendix.retrieval_questions | length }})</span>
+          <span class="text-lg text-stone-400 transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <div class="p-4 border-t border-stone-200 dark:border-stone-800">
+          <ol class="list-decimal pl-4 space-y-2 text-sm text-stone-600 dark:text-stone-300">
+            {% for q in appendix.retrieval_questions %}
+            <li>{{ q }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      </details>
       {% endif %}
     </div>
-    {% endif %}
-
-    <div class="section-body">{{ sections.markets_macro | safe }}</div>
-  </section>
-  {% endif %}
-
-  {# --- Deal of the Day --- #}
-  {% if sections.get("deal_of_day") %}
-  <section class="section" id="section-deal_of_day">
-    <div class="section-kicker">Section 3</div>
-    <h2 class="section-title">Deal of the Day</h2>
-
-    {% if deals %}
-      {% set deal = deals[0] if deals is iterable and deals | length > 0 else none %}
-      {% if deal %}
-      <div class="deal-card">
-        <div class="deal-card-header">
-          <span class="deal-card-title">
-            {% if deal.acquirer is string %}{{ deal.acquirer }}{% else %}{{ deal.get("acquirer","") }}{% endif %}
-            &rarr;
-            {% if deal.target is string %}{{ deal.target }}{% else %}{{ deal.get("target","") }}{% endif %}
-          </span>
-          <span class="deal-card-type">
-            {% if deal.deal_type is string %}{{ deal.deal_type }}{% else %}{{ deal.get("deal_type","") }}{% endif %}
-          </span>
-        </div>
-        <div class="deal-metrics">
-          {% set ev = deal.ev_mm if deal.ev_mm is defined else deal.get("ev_mm") %}
-          {% if ev %}
-          <div class="deal-metric">
-            <div class="deal-metric-label">Enterprise Value</div>
-            <div class="deal-metric-value">${{ "{:,.0f}".format(ev) }}M</div>
-          </div>
-          {% endif %}
-          {% set evr = deal.ev_revenue if deal.ev_revenue is defined else deal.get("ev_revenue") %}
-          {% if evr %}
-          <div class="deal-metric">
-            <div class="deal-metric-label">EV / Revenue</div>
-            <div class="deal-metric-value">{{ evr }}</div>
-          </div>
-          {% endif %}
-          {% set eve = deal.ev_ebitda if deal.ev_ebitda is defined else deal.get("ev_ebitda") %}
-          {% if eve %}
-          <div class="deal-metric">
-            <div class="deal-metric-label">EV / EBITDA</div>
-            <div class="deal-metric-value">{{ eve }}</div>
-          </div>
-          {% endif %}
-          {% set prem = deal.premium_pct if deal.premium_pct is defined else deal.get("premium_pct") %}
-          {% if prem %}
-          <div class="deal-metric">
-            <div class="deal-metric-label">Premium</div>
-            <div class="deal-metric-value">{{ "{:.1f}".format(prem) }}%</div>
-          </div>
-          {% endif %}
-        </div>
-        {% set consideration = deal.consideration if deal.consideration is defined else deal.get("consideration","") %}
-        {% if consideration %}
-        <div class="deal-detail">
-          <span class="deal-detail-label">Consideration:</span> {{ consideration }}
-        </div>
-        {% endif %}
-        {% set financing = deal.financing if deal.financing is defined else deal.get("financing","") %}
-        {% if financing %}
-        <div class="deal-detail">
-          <span class="deal-detail-label">Financing:</span> {{ financing }}
-        </div>
-        {% endif %}
-        {% set sector = deal.sector if deal.sector is defined else deal.get("sector","") %}
-        {% if sector %}
-        <div class="deal-detail">
-          <span class="deal-detail-label">Sector:</span> {{ sector }}
-        </div>
-        {% endif %}
-        {% set status = deal.status if deal.status is defined else deal.get("status","") %}
-        {% if status %}
-        <div class="deal-detail">
-          <span class="deal-detail-label">Status:</span> {{ status }}
-        </div>
-        {% endif %}
-      </div>
-      {% endif %}
-    {% endif %}
-
-    <div class="section-body">{{ sections.deal_of_day | safe }}</div>
-  </section>
-  {% endif %}
-
-  {# --- PE & PC Developments --- #}
-  {% if sections.get("pe_pc") %}
-  <section class="section" id="section-pe_pc">
-    <div class="section-kicker">Section 4</div>
-    <h2 class="section-title">PE &amp; PC Developments</h2>
-    <div class="section-body">{{ sections.pe_pc | safe }}</div>
-  </section>
-  {% endif %}
-
-  {# --- Company / Sector Insight --- #}
-  {% if sections.get("company_insight") %}
-  <section class="section" id="section-company_insight">
-    <div class="section-kicker">Section 5</div>
-    <h2 class="section-title">Company / Sector Insight</h2>
-    <div class="section-body">{{ sections.company_insight | safe }}</div>
-  </section>
-  {% endif %}
-
-  {# --- Interview Practice --- #}
-  {% if sections.get("interview_practice") %}
-  <section class="section" id="section-interview_practice">
-    <div class="section-kicker">Section 6</div>
-    <h2 class="section-title">Interview Practice</h2>
-    <div class="section-body" id="interview-section">{{ sections.interview_practice | safe }}</div>
-  </section>
-  {% endif %}
-
-  {# --- What to Watch --- #}
-  {% if sections.get("what_to_watch") %}
-  <section class="section" id="section-what_to_watch">
-    <div class="section-kicker">Section 7</div>
-    <h2 class="section-title">What to Watch</h2>
-    <div class="section-body">{{ sections.what_to_watch | safe }}</div>
-  </section>
-  {% endif %}
-
-  <!-- APPENDIX -->
-  <div class="appendix" id="appendix">
-    <h2 class="appendix-title">Appendix</h2>
-
-    {% if appendix.get("full_market_table") %}
-    <details class="appendix-section">
-      <summary>Full Market Table</summary>
-      <div class="appendix-content">{{ appendix.full_market_table | safe }}</div>
-    </details>
-    {% endif %}
-
-    {% if appendix.get("additional_stories") %}
-    <details class="appendix-section">
-      <summary>Additional Stories ({{ appendix.additional_stories | length }})</summary>
-      <div class="appendix-content">
-        <ul class="appendix-list">
-          {% for story in appendix.additional_stories %}
-          <li>{{ story | safe }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </details>
-    {% endif %}
-
-    {% if appendix.get("source_links") %}
-    <details class="appendix-section">
-      <summary>Sources ({{ appendix.source_links | length }})</summary>
-      <div class="appendix-content">
-        <ul class="appendix-list">
-          {% for link in appendix.source_links %}
-          <li>
-            {% if link is mapping %}
-              <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.title or link.url }}</a>
-            {% else %}
-              {{ link | safe }}
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </details>
-    {% endif %}
-
-    {% if appendix.get("glossary_term") and appendix.glossary_term.get("term") %}
-    <details class="appendix-section">
-      <summary>Glossary: {{ appendix.glossary_term.term }}</summary>
-      <div class="appendix-content">
-        <strong>{{ appendix.glossary_term.term }}</strong> &mdash; {{ appendix.glossary_term.definition }}
-      </div>
-    </details>
-    {% endif %}
-
-    {% if appendix.get("retrieval_questions") %}
-    <details class="appendix-section">
-      <summary>Retrieval Questions ({{ appendix.retrieval_questions | length }})</summary>
-      <div class="appendix-content">
-        <ol class="appendix-list">
-          {% for q in appendix.retrieval_questions %}
-          <li>{{ q }}</li>
-          {% endfor %}
-        </ol>
-      </div>
-    </details>
-    {% endif %}
   </div>
 
-</div><!-- /.article -->
+</main>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-nav">
+<footer class="max-w-5xl mx-auto px-4 md:px-6">
+  <div class="border-t-4 border-double border-stone-200 dark:border-stone-800 py-6 pb-12">
+    <div class="flex justify-between items-center mb-3">
       {% if prev_date %}
-        <a href="../{{ prev_date }}/index.html">&larr; {{ prev_date }}</a>
+        <a href="../{{ prev_date }}/index.html" class="text-sm font-semibold text-red-700 dark:text-red-400 hover:underline">&larr; {{ prev_date }}</a>
       {% else %}
-        <span class="disabled">&larr; Previous</span>
+        <span class="text-sm text-stone-400 dark:text-stone-600">&larr; Previous</span>
       {% endif %}
 
-      <a href="{{ base_url }}/index.html">Archive</a>
+      <a href="{{ base_url }}/index.html" class="text-sm font-semibold text-red-700 dark:text-red-400 hover:underline">Archive</a>
 
       {% if next_date %}
-        <a href="../{{ next_date }}/index.html">{{ next_date }} &rarr;</a>
+        <a href="../{{ next_date }}/index.html" class="text-sm font-semibold text-red-700 dark:text-red-400 hover:underline">{{ next_date }} &rarr;</a>
       {% else %}
-        <span class="disabled">Next &rarr;</span>
+        <span class="text-sm text-stone-400 dark:text-stone-600">Next &rarr;</span>
       {% endif %}
     </div>
-    <div class="footer-meta">
+    <div class="text-xs text-stone-400 dark:text-stone-600 text-center">
       Generated {{ generated_at.strftime("%Y-%m-%d %H:%M UTC") if generated_at else "" }}
     </div>
   </div>
@@ -855,7 +648,7 @@ details.appendix-section .appendix-content {
   "use strict";
 
   /* --- Smooth scroll for TOC --- */
-  document.querySelectorAll(".toc a").forEach(function(link) {
+  document.querySelectorAll(".toc-link").forEach(function(link) {
     link.addEventListener("click", function(e) {
       var href = this.getAttribute("href");
       if (href && href.charAt(0) === "#") {
@@ -863,16 +656,18 @@ details.appendix-section .appendix-content {
         var target = document.querySelector(href);
         if (target) {
           target.scrollIntoView({ behavior: "smooth", block: "start" });
-          document.querySelectorAll(".toc a").forEach(function(l) { l.classList.remove("active"); });
-          this.classList.add("active");
+          document.querySelectorAll(".toc-link").forEach(function(l) {
+            l.classList.remove("bg-red-700", "text-white");
+          });
+          this.classList.add("bg-red-700", "text-white");
         }
       }
     });
   });
 
   /* --- Active TOC on scroll --- */
-  var sections = document.querySelectorAll(".section, .appendix");
-  var tocLinks = document.querySelectorAll(".toc a");
+  var sections = document.querySelectorAll("section[id], div[id='appendix']");
+  var tocLinks = document.querySelectorAll(".toc-link");
   var scrollTimer;
   window.addEventListener("scroll", function() {
     clearTimeout(scrollTimer);
@@ -881,11 +676,13 @@ details.appendix-section .appendix-content {
       sections.forEach(function(sec) {
         var id = sec.getAttribute("id");
         if (!id) return;
-        var link = document.querySelector('.toc a[href="#' + id + '"]');
+        var link = document.querySelector('.toc-link[href="#' + id + '"]');
         if (!link) return;
         if (sec.offsetTop <= scrollPos && sec.offsetTop + sec.offsetHeight > scrollPos) {
-          tocLinks.forEach(function(l) { l.classList.remove("active"); });
-          link.classList.add("active");
+          tocLinks.forEach(function(l) {
+            l.classList.remove("bg-red-700", "text-white");
+          });
+          link.classList.add("bg-red-700", "text-white");
         }
       });
     }, 50);

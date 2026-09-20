@@ -16,10 +16,12 @@ from src.models.deal import Deal
 logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = (
-    "You are a financial briefing writer for Instinct, a daily audio briefing "
+    "You are a financial briefing writer for Instinct, a daily briefing "
     "that helps candidates preparing for Investment Banking, Private Equity, and "
     "Private Credit recruiting interviews stay current on markets and deals. "
-    "Write in a professional but conversational tone suitable for audio delivery. "
+    "Write in a professional but conversational tone. Output HTML: use <p> for "
+    "paragraphs, <a href> for source links, <strong> for emphasis, and <ul>/<li> "
+    "for lists where appropriate. "
     "Be concise, precise, and analytically sharp. Never fabricate financial data — "
     "if data is unavailable, say so. Label all hypothetical assumptions clearly."
 )
@@ -30,13 +32,13 @@ class BriefingGenerator:
     and calling an LLM for each section."""
 
     SECTION_CONFIGS = {
-        "opening_brief": {"target_words": 200, "priority": 1},
-        "markets_macro": {"target_words": 350, "priority": 2},
+        "opening_brief": {"target_words": 350, "priority": 1},
+        "markets_macro": {"target_words": 500, "priority": 2},
         "deal_of_day": {"target_words": 700, "priority": 3},
-        "pe_pc": {"target_words": 500, "priority": 4},
-        "company_insight": {"target_words": 350, "priority": 5},
+        "pe_pc": {"target_words": 600, "priority": 4},
+        "company_insight": {"target_words": 500, "priority": 5},
         "interview_practice": {"target_words": 500, "priority": 6},
-        "what_to_watch": {"target_words": 200, "priority": 7},
+        "what_to_watch": {"target_words": 350, "priority": 7},
     }
 
     def __init__(self, llm: LLMClient, config: dict):
@@ -58,21 +60,14 @@ class BriefingGenerator:
         market: MarketSnapshot,
         articles: list[Article],
         deals: list[Deal],
-        is_weekend: bool = False,
+        **kwargs,
     ) -> Briefing:
-        """Generate the complete briefing.
-
-        On weekdays: all 7 sections plus appendix.
-        On weekends: market snapshot + weekly recap only.
-        """
-        briefing = Briefing(is_weekend=is_weekend)
+        """Generate the complete briefing — all 7 sections plus appendix."""
+        briefing = Briefing()
         briefing.market_snapshot = market.to_dict()
         briefing.info_cutoff = datetime.now()
 
-        if is_weekend:
-            self._generate_weekend(briefing, market, articles, deals)
-        else:
-            self._generate_weekday(briefing, market, articles, deals)
+        self._generate_weekday(briefing, market, articles, deals)
 
         briefing.compute_word_count()
         briefing.headline = self._generate_headline(briefing)
@@ -81,10 +76,9 @@ class BriefingGenerator:
         briefing.deals = [d.to_dict() for d in deals[:5]]
 
         logger.info(
-            "Briefing generated: %d words, %d sections filled, weekend=%s",
+            "Briefing generated: %d words, %d sections filled",
             briefing.word_count,
             sum(1 for v in briefing.sections.values() if v),
-            is_weekend,
         )
         return briefing
 
@@ -257,38 +251,6 @@ class BriefingGenerator:
             briefing, market, articles, deals, deal_analysis, interview_content
         )
 
-    # ── Weekend generation ──────────────────────────────────────────────
-
-    def _generate_weekend(
-        self,
-        briefing: Briefing,
-        market: MarketSnapshot,
-        articles: list[Article],
-        deals: list[Deal],
-    ):
-        """Generate a lighter weekend edition."""
-        data = {
-            "date": briefing.date,
-            "target_words": self.config.get("weekend_words", 800),
-            "market_data": market.to_dict(),
-            "articles": articles[:8],
-            "deals": deals[:4],
-        }
-
-        prompt = self._render_prompt("weekend_recap", **data)
-        text = self.llm.generate(prompt, system=SYSTEM_PROMPT, max_tokens=1200)
-
-        if not text:
-            text = self._weekend_fallback(market, articles, deals)
-
-        # Store in opening_brief section for weekend editions
-        briefing.sections["opening_brief"] = text
-
-        # Clear other sections for weekend
-        for key in briefing.sections:
-            if key != "opening_brief":
-                briefing.sections[key] = ""
-
     # ── Section generation helpers ──────────────────────────────────────
 
     def _generate_section(
@@ -334,7 +296,8 @@ class BriefingGenerator:
         parts = [
             f"Write the '{section_label}' section of a daily financial briefing "
             f"for {date}. Target approximately {target_words} words. "
-            f"Write for spoken audio delivery in a professional, analytical tone.\n"
+            f"Output HTML with <p> tags for paragraphs and <a href> links to sources. "
+            f"Write in a professional, analytical tone.\n"
         ]
 
         # Include whatever data we have
@@ -368,9 +331,9 @@ class BriefingGenerator:
         return "\n".join(parts)
 
     def _section_fallback(self, section: str, data: dict) -> str:
-        """Generate a minimal text fallback when LLM generation fails entirely."""
+        """Generate a minimal HTML fallback when LLM generation fails entirely."""
         section_label = section.replace("_", " ").title()
-        parts = [f"[{section_label}]"]
+        parts = [f"<p><strong>[{section_label}]</strong></p>"]
 
         if section == "opening_brief":
             articles = data.get("articles", [])
@@ -634,43 +597,6 @@ class BriefingGenerator:
             result["definition"] = result.get("definition") or text[:200]
 
         return result
-
-    # ── Weekend fallback ────────────────────────────────────────────────
-
-    def _weekend_fallback(
-        self,
-        market: MarketSnapshot,
-        articles: list[Article],
-        deals: list[Deal],
-    ) -> str:
-        """Generate a minimal weekend recap when LLM fails."""
-        parts = ["Weekend Market Recap\n"]
-
-        # Market summary
-        for name, value in market.indices.items():
-            if value is not None:
-                change = market.index_changes.get(name)
-                change_str = f" ({change:+.2f}%)" if change is not None else ""
-                parts.append(f"{name}: {value:,.2f}{change_str}")
-
-        parts.append("")
-
-        # Top stories
-        if articles:
-            parts.append("This week's top stories:")
-            for a in articles[:5]:
-                parts.append(f"  - {a.title} ({a.source})")
-
-        # Deals
-        if deals:
-            parts.append("\nDeal activity:")
-            for d in deals[:3]:
-                ev_str = f" — ${d.ev_mm:,.0f}M" if d.ev_mm else ""
-                parts.append(
-                    f"  - {d.acquirer} / {d.target}{ev_str} ({d.status})"
-                )
-
-        return "\n".join(parts)
 
     # ── Deal selection ──────────────────────────────────────────────────
 

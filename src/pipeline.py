@@ -14,6 +14,7 @@ from src.collectors.market_data import MarketDataCollector
 from src.collectors.news import NewsCollector
 from src.collectors.deals import DealCollector
 from src.collectors.filings import FilingsCollector
+from src.processors.content_fetcher import ContentFetcher
 from src.processors.deduplicator import Deduplicator
 from src.processors.ranker import Ranker
 from src.processors.extractor import Extractor
@@ -52,9 +53,6 @@ def load_config() -> dict:
     return config
 
 
-def is_weekend() -> bool:
-    return date.today().weekday() >= 5
-
 
 def run(dry_run: bool = False):
     """Execute the full pipeline."""
@@ -78,6 +76,14 @@ def run(dry_run: bool = False):
         "OK" if market else "PARTIAL",
         len(articles),
     )
+
+    # ── STAGE 1.5: FETCH CONTENT ─────────────────────────────────
+    try:
+        fetcher = ContentFetcher(settings)
+        fetcher.fetch_all(articles)
+    except Exception as e:
+        logger.error("Content fetching failed: %s", e)
+        errors.append(f"Content fetch: {e}")
 
     # ── STAGE 2: PROCESS ─────────────────────────────────────────
     logger.info("STAGE 2: Processing articles...")
@@ -232,11 +238,15 @@ def _generate_briefing(market, articles, deals, config, errors):
             market=market,
             articles=articles,
             deals=deals,
-            is_weekend=is_weekend(),
         )
 
+        # Store top articles (with images) for the template
+        briefing.top_articles = [
+            a.to_dict() for a in articles[:5] if a.image_url
+        ][:5]
+
         # Generate deal analysis for top deal
-        if deals and not is_weekend():
+        if deals:
             try:
                 analyzer = DealAnalyzer(llm)
                 deal_analysis = analyzer.analyze(deals[0], articles)

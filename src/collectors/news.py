@@ -127,6 +127,7 @@ class NewsCollector:
                         published=published,
                         summary=item.get("summary", ""),
                         tickers=([item["related"]] if item.get("related") else []),
+                        image_url=item.get("image", ""),
                     ))
                 except Exception as exc:
                     logger.debug("Failed to parse Finnhub news item: %s", exc)
@@ -163,12 +164,19 @@ class NewsCollector:
                         summary = summary.replace("<b>", "").replace("</b>", "")
                         summary = summary.replace("<a ", "").replace("</a>", "")
 
+                        # Extract image from media_content if available
+                        image_url = ""
+                        media = getattr(entry, "media_content", None)
+                        if media and isinstance(media, list) and media:
+                            image_url = media[0].get("url", "")
+
                         articles.append(Article(
                             title=entry.get("title", ""),
                             url=entry.get("link", ""),
                             source="google_news",
                             published=published,
                             summary=summary[:500],
+                            image_url=image_url,
                         ))
                     except Exception as exc:
                         logger.debug("Failed to parse RSS entry: %s", exc)
@@ -214,6 +222,7 @@ class NewsCollector:
                             published=published,
                             summary=item.get("summary", ""),
                             tickers=[ticker],
+                            image_url=item.get("image", ""),
                         ))
                     except Exception as exc:
                         logger.debug("Failed to parse company news item for %s: %s", ticker, exc)

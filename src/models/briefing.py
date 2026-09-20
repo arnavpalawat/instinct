@@ -40,6 +40,7 @@ class Briefing:
     headline: str = ""
     deals: list = field(default_factory=list)
     market_snapshot: dict = field(default_factory=dict)
+    top_articles: list = field(default_factory=list)
     pipeline_errors: list[str] = field(default_factory=list)
 
     def __post_init__(self):

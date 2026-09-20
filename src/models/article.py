@@ -15,6 +15,7 @@ class Article:
     tickers: list[str] = field(default_factory=list)
     sectors: list[str] = field(default_factory=list)
     relevance_score: float = 0.0
+    image_url: str = ""
     is_deal_related: bool = False
     raw_content: str = ""
     id: str = ""
@@ -35,5 +36,6 @@ class Article:
             "tickers": self.tickers,
             "sectors": self.sectors,
             "relevance_score": self.relevance_score,
+            "image_url": self.image_url,
             "is_deal_related": self.is_deal_related,
         }

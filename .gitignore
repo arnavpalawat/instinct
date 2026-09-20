@@ -32,5 +32,8 @@ Thumbs.db
 service-account*.json
 credentials*.json
 
+# Cache
+.cache/
+
 # Generated docs (on gh-pages branch only)
 # docs/ is tracked on gh-pages but not main

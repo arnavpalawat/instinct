@@ -96,8 +96,11 @@ class Deduplicator:
 
     @staticmethod
     def _article_text(article: Article) -> str:
-        """Combine title and summary into a single text for vectorisation."""
-        return f"{article.title} {article.summary}"
+        """Combine title, summary, and raw content for richer vectorisation."""
+        parts = [article.title, article.summary]
+        if article.raw_content:
+            parts.append(article.raw_content[:1000])
+        return " ".join(parts)
 
     def _build_clusters(
         self, sim_matrix, n: int

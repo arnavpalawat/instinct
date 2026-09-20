@@ -8,200 +8,65 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:          #fafaf9;
-  --bg-surface:  #ffffff;
-  --border:      #e7e5e4;
-  --border-light:#f5f5f4;
-  --text:        #1c1917;
-  --text-2:      #44403c;
-  --text-3:      #78716c;
-  --accent:      #b91c1c;
-  --accent-hover:#991b1b;
-  --accent-bg:   #fef2f2;
-  --card-shadow: 0 1px 3px rgba(0,0,0,.04);
-  --radius:      4px;
-  --serif:       "Instrument Serif", "Georgia", "Times New Roman", serif;
-  --sans:        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --mono:        "JetBrains Mono", "SF Mono", Menlo, monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:          #0c0a09;
-    --bg-surface:  #1c1917;
-    --border:      #292524;
-    --border-light:#1c1917;
-    --text:        #fafaf9;
-    --text-2:      #d6d3d1;
-    --text-3:      #a8a29e;
-    --accent:      #fca5a5;
-    --accent-hover:#fecaca;
-    --accent-bg:   #451a1a;
-    --card-shadow: none;
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'media',
+    corePlugins: { preflight: true },
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+          sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', '"SF Mono"', 'monospace'],
+        },
+      },
+    },
   }
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; }
-
-body {
-  font-family: var(--sans);
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--text);
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
-}
-
-.container {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-a { color: var(--accent); text-decoration: none; }
-a:hover { color: var(--accent-hover); text-decoration: underline; }
-
-/* Header */
-.header {
-  border-bottom: 3px double var(--border);
-  padding: 28px 0 20px;
-  text-align: center;
-}
-
-.header-name {
-  font-family: var(--serif);
-  font-size: 42px;
-  font-weight: 400;
-  color: var(--text);
-  line-height: 1.1;
-}
-
-.header-rule {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 12px 0 8px;
-}
-
-.header-sub {
-  font-size: 13px;
-  color: var(--text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Edition List */
-.editions {
-  padding: 8px 0 48px;
-}
-
-.edition-card {
-  display: block;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--border-light);
-  text-decoration: none;
-  color: inherit;
-}
-
-.edition-card:hover { text-decoration: none; }
-.edition-card:first-child { padding-top: 20px; }
-
-.edition-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.edition-date {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.edition-meta {
-  font-size: 12px;
-  color: var(--text-3);
-  font-family: var(--mono);
-}
-
-.edition-headline {
-  margin: 6px 0 0;
-  font-family: var(--serif);
-  font-size: 22px;
-  font-weight: 400;
-  color: var(--text);
-  line-height: 1.3;
-}
-
-.edition-card:hover .edition-headline {
-  color: var(--accent);
-}
-
-/* Empty state */
-.empty {
-  text-align: center;
-  padding: 80px 20px;
-  color: var(--text-3);
-}
-
-.empty p:first-child {
-  font-family: var(--serif);
-  font-size: 24px;
-  color: var(--text-2);
-  margin-bottom: 8px;
-}
-
-/* Footer */
-.footer {
-  border-top: 3px double var(--border);
-  padding: 20px 0 48px;
-  font-size: 12px;
-  color: var(--text-3);
-  text-align: center;
-}
-</style>
+</script>
 </head>
-<body>
+<body class="bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-sans antialiased">
 
-<div class="container">
+<div class="max-w-4xl mx-auto px-4 md:px-6">
 
-  <header class="header">
-    <div class="header-name">Instinct</div>
-    <hr class="header-rule">
-    <div class="header-sub">
+  <!-- MASTHEAD -->
+  <header class="border-b-4 border-double border-stone-200 dark:border-stone-800 pt-7 pb-5 text-center">
+    <div class="font-serif text-[42px] tracking-tight text-stone-900 dark:text-stone-100 leading-none">Instinct</div>
+    <hr class="border-t border-stone-200 dark:border-stone-800 my-3">
+    <div class="text-xs font-medium tracking-wider uppercase text-stone-400 dark:text-stone-500">
       {% if total %}{{ total }} edition{{ "s" if total != 1 else "" }} published{% else %}No editions yet{% endif %}
     </div>
   </header>
 
-  <div class="editions">
+  <!-- EDITION GRID -->
+  <div class="py-8">
     {% if editions %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       {% for e in editions %}
-      <a class="edition-card" href="{{ e.url }}">
-        <div class="edition-top">
-          <span class="edition-date">{{ e.date_formatted }}</span>
-          <div class="edition-meta">
-            {% if e.word_count %}<span>{{ "{:,}".format(e.word_count) }}w</span>{% endif %}
-          </div>
+      <a href="{{ e.url }}" class="group block bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5 transition-all hover:border-red-300 dark:hover:border-red-700 hover:shadow-md hover:-translate-y-0.5">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <span class="text-xs font-semibold tracking-wider uppercase text-stone-400 dark:text-stone-500">{{ e.date_formatted }}</span>
+          {% if e.word_count %}
+          <span class="text-xs font-mono text-stone-400 dark:text-stone-500">{{ "{:,}".format(e.word_count) }}w</span>
+          {% endif %}
         </div>
         {% if e.headline %}
-        <div class="edition-headline">{{ e.headline }}</div>
+        <div class="font-serif text-xl leading-snug text-stone-900 dark:text-stone-100 group-hover:text-red-700 dark:group-hover:text-red-400 transition-colors">{{ e.headline }}</div>
         {% endif %}
+        <div class="mt-3 text-xs font-semibold text-red-700 dark:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">Read briefing &rarr;</div>
       </a>
       {% endfor %}
+    </div>
     {% else %}
-      <div class="empty">
-        <p>No briefings published yet.</p>
-        <p style="font-size:14px;">Check back tomorrow morning.</p>
-      </div>
+    <div class="text-center py-20">
+      <p class="font-serif text-2xl text-stone-600 dark:text-stone-300 mb-2">No briefings published yet.</p>
+      <p class="text-sm text-stone-400 dark:text-stone-500">Check back tomorrow morning.</p>
+    </div>
     {% endif %}
   </div>
 
-  <footer class="footer">
+  <!-- FOOTER -->
+  <footer class="border-t-4 border-double border-stone-200 dark:border-stone-800 py-5 pb-12 text-xs text-stone-400 dark:text-stone-600 text-center">
     Generated {{ generated_at.strftime("%Y-%m-%d %H:%M UTC") if generated_at else "" }}
   </footer>
 

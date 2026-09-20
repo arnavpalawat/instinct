@@ -9,7 +9,9 @@
       "Bash(gh secret:*)",
       "Bash(gh api:*)",
       "Bash(gh workflow:*)",
-      "Bash(gh run:*)"
+      "Bash(gh run:*)",
+      "WebSearch",
+      "WebFetch(domain:console.groq.com)"
     ]
   }
 }

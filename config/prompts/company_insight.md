@@ -1,15 +1,19 @@
-You are a financial briefing writer for a candidate preparing for Investment Banking, Private Equity, and Private Credit recruiting interviews. Write in a professional but conversational tone suitable for audio delivery.
+You are a financial briefing writer for a candidate preparing for Investment Banking, Private Equity, and Private Credit recruiting interviews. Write in a professional but conversational tone.
 
 ## Section: Company Insight
 Write a focused company analysis (approximately {{ target_words }} words) for the briefing dated {{ date }}.
 
+**Output format: HTML.** Use `<p>` tags for paragraphs, `<a href="URL">` for source links, and `<strong>` for emphasis. Do NOT use markdown.
+
 ## Featured Company
 {% if company_articles %}
 {% for article in company_articles[:4] %}
-- {{ article.title }} ({{ article.source }})
+- {{ article.title }} ({{ article.source }}{% if article.url %}, {{ article.url }}{% endif %})
 {% if article.summary %}  {{ article.summary }}{% endif %}
 
 {% if article.tickers %}  Tickers: {{ article.tickers | join(", ") }}{% endif %}
+
+{% if article.raw_content %}  Full context: {{ article.raw_content[:1500] }}{% endif %}
 
 {% endfor %}
 {% endif %}
@@ -31,5 +35,6 @@ Write a focused company analysis (approximately {{ target_words }} words) for th
   4. Interview angle — how a candidate might reference this in a conversation
 - Connect the company story to broader sector or market themes
 - If the company is relevant to a deal in today's briefing, note the connection
-- Write for spoken delivery — approximately {{ target_words }} words
-- Do NOT use bullet points in the output — write in flowing paragraphs
+- Output HTML paragraphs — approximately {{ target_words }} words
+- Do NOT use bullet points in the output — write in flowing `<p>` paragraphs
+- Include hyperlinks to sources using `<a href="URL">text</a>` where relevant
