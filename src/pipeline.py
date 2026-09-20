@@ -146,10 +146,8 @@ def _collect_articles(config, errors):
     # News
     try:
         news_collector = NewsCollector(config["settings"])
-        watchlist_tickers = [t["symbol"] for t in config["watchlist"].get("tickers", [])]
         news = news_collector.collect(
             sectors=list(config["sectors"].keys()),
-            watchlist_tickers=watchlist_tickers,
         )
         articles.extend(news)
         logger.info("News: %d articles", len(news))

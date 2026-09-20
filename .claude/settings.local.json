@@ -4,7 +4,12 @@
       "Bash(pip install:*)",
       "Bash(python:*)",
       "Bash(python3:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git reset:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh api:*)",
+      "Bash(gh workflow:*)",
+      "Bash(gh run:*)"
     ]
   }
 }
