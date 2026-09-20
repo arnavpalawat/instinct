@@ -18,6 +18,7 @@ class Briefing:
         "deal_of_day": "",
         "pe_pc": "",
         "company_insight": "",
+        "politics_policy": "",
         "interview_practice": "",
         "what_to_watch": "",
     })
@@ -53,7 +54,8 @@ class Briefing:
         """Concatenate all spoken sections for TTS."""
         order = [
             "opening_brief", "markets_macro", "deal_of_day",
-            "pe_pc", "company_insight", "interview_practice", "what_to_watch",
+            "pe_pc", "company_insight", "politics_policy",
+            "interview_practice", "what_to_watch",
         ]
         parts = []
         for key in order:

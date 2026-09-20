@@ -240,10 +240,13 @@ def _generate_briefing(market, articles, deals, config, errors):
             deals=deals,
         )
 
-        # Store top articles (with images) for the template
-        briefing.top_articles = [
-            a.to_dict() for a in articles[:5] if a.image_url
-        ][:5]
+        # Store top articles for the template (prioritize those with images)
+        with_images = [a for a in articles if a.image_url]
+        without_images = [a for a in articles if not a.image_url]
+        top_pool = with_images[:8]
+        if len(top_pool) < 8:
+            top_pool.extend(without_images[: 8 - len(top_pool)])
+        briefing.top_articles = [a.to_dict() for a in top_pool[:8]]
 
         # Generate deal analysis for top deal
         if deals:
@@ -333,6 +336,7 @@ def _print_briefing(briefing):
         "deal_of_day": "DEAL OF THE DAY",
         "pe_pc": "PE & PC DEVELOPMENTS",
         "company_insight": "COMPANY/SECTOR INSIGHT",
+        "politics_policy": "POLITICS & POLICY",
         "interview_practice": "INTERVIEW PRACTICE",
         "what_to_watch": "WHAT TO WATCH",
     }

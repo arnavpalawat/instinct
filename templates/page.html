@@ -136,6 +136,14 @@
   margin-left: -36px;
 }
 
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Print styles */
 @media print {
   .toc-nav, .market-pulse-strip { display: none !important; }
@@ -235,18 +243,61 @@
   </div>
   {% endif %}
 
-  <!-- LEAD IMAGE -->
-  {% if top_articles and top_articles[0].image_url %}
-  <figure class="mt-4 mb-6">
-    <img src="{{ top_articles[0].image_url }}" alt="{{ top_articles[0].title }}" loading="lazy" class="w-full max-h-[400px] object-cover rounded-xl border border-stone-200 dark:border-stone-800">
-    <figcaption class="text-xs text-stone-400 dark:text-stone-500 mt-2 italic">{{ top_articles[0].title }} — {{ top_articles[0].source }}</figcaption>
-  </figure>
+  <!-- TOP STORIES -->
+  {% if top_articles %}
+  <section class="mt-6 mb-6" id="top-stories">
+    <h2 class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-4">Top Stories</h2>
+
+    {# Lead card #}
+    {% set lead = top_articles[0] %}
+    <a href="{{ lead.url }}" target="_blank" rel="noopener" class="block group mb-6">
+      <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        {% if lead.image_url %}
+        <img src="{{ lead.image_url }}" alt="{{ lead.title }}" loading="lazy" class="w-full max-h-[400px] object-cover">
+        {% endif %}
+        <div class="p-5">
+          <h3 class="font-serif text-2xl md:text-3xl text-stone-900 dark:text-stone-100 leading-tight group-hover:text-red-700 dark:group-hover:text-red-400 transition-colors">{{ lead.title }}</h3>
+          {% if lead.summary %}
+          <p class="mt-2 text-sm text-stone-500 dark:text-stone-400 line-clamp-2">{{ lead.summary[:200] }}</p>
+          {% endif %}
+          <span class="inline-block mt-3 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400">{{ lead.source }}</span>
+        </div>
+      </div>
+    </a>
+
+    {# Secondary cards grid #}
+    {% if top_articles | length > 1 %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for article in top_articles[1:7] %}
+      <a href="{{ article.url }}" target="_blank" rel="noopener" class="group block bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        {% if article.image_url %}
+        <img src="{{ article.image_url }}" alt="{{ article.title }}" loading="lazy" class="w-full h-40 object-cover">
+        {% else %}
+        <div class="w-full h-40 bg-stone-100 dark:bg-stone-800 flex items-center justify-center">
+          <span class="text-4xl font-serif text-stone-300 dark:text-stone-600">I</span>
+        </div>
+        {% endif %}
+        <div class="p-4">
+          <h4 class="font-serif text-base leading-snug text-stone-900 dark:text-stone-100 group-hover:text-red-700 dark:group-hover:text-red-400 transition-colors line-clamp-2">{{ article.title }}</h4>
+          {% if article.summary %}
+          <p class="mt-1.5 text-xs text-stone-400 dark:text-stone-500 line-clamp-2">{{ article.summary[:120] }}</p>
+          {% endif %}
+          <span class="inline-block mt-2 text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500">{{ article.source }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
   {% endif %}
 </div>
 
 <!-- STICKY TOC NAVIGATION -->
 <nav class="toc-nav sticky top-0 z-40 bg-stone-50/90 dark:bg-stone-950/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-800" id="toc">
   <div class="max-w-5xl mx-auto px-4 md:px-6 py-2 flex gap-1.5 overflow-x-auto scrollbar-hide">
+    {% if top_articles %}
+    <a href="#top-stories" class="toc-link text-xs font-semibold uppercase tracking-wider text-stone-400 dark:text-stone-500 px-3 py-1.5 rounded-full whitespace-nowrap transition-all hover:text-red-700 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-950/30">Top Stories</a>
+    {% endif %}
     {% for key in section_order %}
       {% if sections.get(key) %}
     <a href="#section-{{ key }}" class="toc-link text-xs font-semibold uppercase tracking-wider text-stone-400 dark:text-stone-500 px-3 py-1.5 rounded-full whitespace-nowrap transition-all hover:text-red-700 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-950/30">{{ section_labels[key] }}</a>
@@ -506,11 +557,24 @@
   </section>
   {% endif %}
 
+  <!-- POLITICS & POLICY (readable) -->
+  {% if sections.get("politics_policy") %}
+  <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-politics_policy">
+    <div class="max-w-prose mx-auto px-4 md:px-6">
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 6</div>
+      <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">Politics &amp; Policy</h2>
+      <div class="prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100 max-w-none">
+        {{ sections.politics_policy | safe }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
   <!-- INTERVIEW PRACTICE (readable) -->
   {% if sections.get("interview_practice") %}
   <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-interview_practice">
     <div class="max-w-prose mx-auto px-4 md:px-6">
-      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 6</div>
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 7</div>
       <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">Interview Practice</h2>
       <div id="interview-section">
         {{ sections.interview_practice | safe }}
@@ -523,7 +587,7 @@
   {% if sections.get("what_to_watch") %}
   <section class="py-8 md:py-10 border-b border-stone-200 dark:border-stone-800" id="section-what_to_watch">
     <div class="max-w-prose mx-auto px-4 md:px-6">
-      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 7</div>
+      <div class="text-[11px] font-bold tracking-[1.5px] uppercase text-red-700 dark:text-red-400 mb-1">Section 8</div>
       <h2 class="font-serif text-[28px] md:text-3xl font-normal text-stone-900 dark:text-stone-100 mb-5">What to Watch</h2>
       <div class="prose prose-stone dark:prose-invert prose-headings:font-serif prose-a:text-red-700 dark:prose-a:text-red-400 prose-strong:text-stone-900 dark:prose-strong:text-stone-100 max-w-none">
         {{ sections.what_to_watch | safe }}
@@ -555,12 +619,26 @@
           <span>Additional Stories ({{ appendix.additional_stories | length }})</span>
           <span class="text-lg text-stone-400 transition-transform group-open:rotate-45">+</span>
         </summary>
-        <div class="p-4 border-t border-stone-200 dark:border-stone-800">
-          <ul class="list-disc pl-4 space-y-2 text-sm text-stone-600 dark:text-stone-300">
-            {% for story in appendix.additional_stories %}
-            <li>{{ story | safe }}</li>
-            {% endfor %}
-          </ul>
+        <div class="p-4 border-t border-stone-200 dark:border-stone-800 space-y-3">
+          {% for story in appendix.additional_stories %}
+          {% if story is mapping %}
+          <a href="{{ story.url }}" target="_blank" rel="noopener" class="flex items-start gap-3 group">
+            {% if story.image_url %}
+            <img src="{{ story.image_url }}" alt="" loading="lazy" class="w-20 h-14 object-cover rounded-lg flex-shrink-0 border border-stone-200 dark:border-stone-700">
+            {% else %}
+            <div class="w-20 h-14 bg-stone-100 dark:bg-stone-800 rounded-lg flex-shrink-0 flex items-center justify-center">
+              <span class="text-lg font-serif text-stone-300 dark:text-stone-600">I</span>
+            </div>
+            {% endif %}
+            <div class="min-w-0">
+              <div class="text-sm font-medium text-stone-700 dark:text-stone-200 group-hover:text-red-700 dark:group-hover:text-red-400 transition-colors line-clamp-2">{{ story.title }}</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 mt-0.5">{{ story.source }}</div>
+            </div>
+          </a>
+          {% else %}
+          <div class="text-sm text-stone-600 dark:text-stone-300">{{ story | safe }}</div>
+          {% endif %}
+          {% endfor %}
         </div>
       </details>
       {% endif %}

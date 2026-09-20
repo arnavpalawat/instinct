@@ -65,22 +65,24 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Save generated docs/ to a temp location (not committed to main yet)
+          cp -r docs /tmp/instinct-docs
+
           # Check if gh-pages branch exists
           if git ls-remote --heads origin gh-pages | grep -q gh-pages; then
             git fetch origin gh-pages
             git checkout gh-pages
-            # Copy new briefing files from main's docs/
-            git checkout main -- docs/
           else
             git checkout --orphan gh-pages
             git rm -rf . 2>/dev/null || true
-            git checkout main -- docs/
           fi
 
-          # Move docs contents to root for GitHub Pages
-          if [ -d docs ]; then
-            cp -r docs/* . 2>/dev/null || true
-            rm -rf docs
+          # Copy generated docs content to root for GitHub Pages
+          cp -r /tmp/instinct-docs/* . 2>/dev/null || true
+
+          # Also keep briefings/ and assets/ at root level
+          if [ -d briefings ]; then
+            echo "briefings/ already at root"
           fi
 
           git add -A

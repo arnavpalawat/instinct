@@ -18,6 +18,7 @@ SECTION_LABELS = {
     "deal_of_day": "Deal of the Day",
     "pe_pc": "PE & PC Developments",
     "company_insight": "Company / Sector Insight",
+    "politics_policy": "Politics & Policy",
     "interview_practice": "Interview Practice",
     "what_to_watch": "What to Watch",
 }

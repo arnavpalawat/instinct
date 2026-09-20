@@ -35,5 +35,8 @@ credentials*.json
 # Cache
 .cache/
 
+# Preview files
+docs/_preview.html
+
 # Generated docs (on gh-pages branch only)
 # docs/ is tracked on gh-pages but not main

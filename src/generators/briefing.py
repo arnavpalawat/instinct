@@ -32,13 +32,14 @@ class BriefingGenerator:
     and calling an LLM for each section."""
 
     SECTION_CONFIGS = {
-        "opening_brief": {"target_words": 350, "priority": 1},
-        "markets_macro": {"target_words": 500, "priority": 2},
-        "deal_of_day": {"target_words": 700, "priority": 3},
-        "pe_pc": {"target_words": 600, "priority": 4},
-        "company_insight": {"target_words": 500, "priority": 5},
-        "interview_practice": {"target_words": 500, "priority": 6},
-        "what_to_watch": {"target_words": 350, "priority": 7},
+        "opening_brief": {"target_words": 450, "priority": 1},
+        "markets_macro": {"target_words": 650, "priority": 2},
+        "deal_of_day": {"target_words": 900, "priority": 3},
+        "pe_pc": {"target_words": 750, "priority": 4},
+        "company_insight": {"target_words": 650, "priority": 5},
+        "politics_policy": {"target_words": 400, "priority": 6},
+        "interview_practice": {"target_words": 600, "priority": 7},
+        "what_to_watch": {"target_words": 450, "priority": 8},
     }
 
     def __init__(self, llm: LLMClient, config: dict):
@@ -160,6 +161,21 @@ class BriefingGenerator:
         )
         watchlist_items = market.watchlist[:5]
 
+        # Politics/policy articles
+        politics_articles = [
+            a
+            for a in articles
+            if "politics" in a.sectors
+            or any(
+                kw in (a.title + a.summary).lower()
+                for kw in [
+                    "policy", "regulation", "regulatory", "tariff",
+                    "federal reserve", "fiscal", "antitrust", "sanctions",
+                    "geopolit", "congress", "legislation", "trade war",
+                ]
+            )
+        ]
+
         # Forward-looking articles
         forward_articles = [
             a
@@ -212,6 +228,9 @@ class BriefingGenerator:
             "company_insight": {
                 "company_articles": company_articles[:4],
                 "watchlist_items": [w.to_dict() for w in watchlist_items],
+            },
+            "politics_policy": {
+                "politics_articles": politics_articles[:6],
             },
             "interview_practice": {
                 "deal": featured_deal,
@@ -381,6 +400,12 @@ class BriefingGenerator:
                 if isinstance(a, Article):
                     parts.append(f"  - {a.title}")
 
+        elif section == "politics_policy":
+            pol_articles = data.get("politics_articles", [])
+            for a in pol_articles[:3]:
+                if isinstance(a, Article):
+                    parts.append(f"  - {a.title}")
+
         elif section == "interview_practice":
             interview = data.get("interview_content", {})
             if isinstance(interview, dict) and interview.get("sample_answer"):
@@ -451,7 +476,7 @@ class BriefingGenerator:
 
         additional = [a for a in articles if a.id not in covered_ids][:10]
         briefing.appendix["additional_stories"] = [
-            {"title": a.title, "source": a.source, "url": a.url, "summary": a.summary}
+            {"title": a.title, "source": a.source, "url": a.url, "summary": a.summary, "image_url": a.image_url}
             for a in additional
         ]
 

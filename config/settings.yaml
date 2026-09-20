@@ -34,7 +34,7 @@ publishing:
 
 content_fetcher:
   max_workers: 5
-  max_length: 5000
+  max_length: 8000
   rate_limit_delay: 0.5
   cache_enabled: true
   skip_domains: []  # Additional domains to skip beyond built-in paywalled list

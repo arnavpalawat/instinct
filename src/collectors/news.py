@@ -28,6 +28,14 @@ class NewsCollector:
         "debt financing bond issuance",
     ]
 
+    POLITICS_QUERIES = [
+        "US economic policy regulation",
+        "Federal Reserve monetary policy",
+        "trade policy tariffs",
+        "government fiscal policy budget",
+        "geopolitics markets impact",
+    ]
+
     SECTOR_RSS_QUERIES = {
         "technology": "technology acquisition deal",
         "healthcare": "healthcare pharma acquisition",
@@ -79,14 +87,28 @@ class NewsCollector:
         # 1. Finnhub general news
         _add(self._fetch_finnhub_news(category="general"))
 
-        # 2. Google News RSS (default queries)
+        # 2. Google News RSS (default queries + politics)
         queries = list(self.DEFAULT_RSS_QUERIES)
+        queries.extend(self.POLITICS_QUERIES)
         if sectors:
             for s in sectors:
                 q = self.SECTOR_RSS_QUERIES.get(s.lower())
                 if q:
                     queries.append(q)
         _add(self._fetch_google_news_rss(queries))
+
+        # Tag politics articles
+        politics_keywords = [
+            "policy", "regulation", "regulatory", "federal reserve", "fed ",
+            "tariff", "trade war", "fiscal", "budget", "congress",
+            "legislation", "antitrust", "sanctions", "geopolit",
+            "monetary policy", "government", "tax reform", "sec rule",
+        ]
+        for a in articles:
+            text = (a.title + " " + a.summary).lower()
+            if any(kw in text for kw in politics_keywords):
+                if "politics" not in a.sectors:
+                    a.sectors.append("politics")
 
         # 3. Company-specific news for watchlist tickers
         watchlist = self.config.get("watchlist", [])
