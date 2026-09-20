@@ -51,6 +51,7 @@ class ContentFetcher:
         config = config or {}
         content_config = config.get("content_fetcher", {})
         self.max_workers = content_config.get("max_workers", DEFAULT_WORKERS)
+        self.max_articles = content_config.get("max_articles", 50)
         self.max_length = content_config.get("max_length", MAX_CONTENT_LENGTH)
         self.rate_limit = content_config.get("rate_limit_delay", RATE_LIMIT_DELAY)
         self.cache_enabled = content_config.get("cache_enabled", True)
@@ -70,7 +71,8 @@ class ContentFetcher:
         Modifies articles in place, setting raw_content where successful.
         Returns the same list for chaining.
         """
-        to_fetch = [a for a in articles if not a.raw_content and a.url and not self._should_skip(a.url)]
+        max_articles = self.max_articles
+        to_fetch = [a for a in articles if not a.raw_content and a.url and not self._should_skip(a.url)][:max_articles]
         if not to_fetch:
             logger.info("Content fetch: nothing to fetch (all cached/skipped)")
             return articles
